@@ -21,8 +21,8 @@ ALPHA=.05
 N_VALIDATION=124
 VALIDATION_REPS=20_000
 ROOT=Path(__file__).resolve().parent.parent
-DATA=ROOT/"figure_data"
-RESULT_JSON=ROOT/"analysis"/"SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json"
+DATA=ROOT/"reproduced"/"figure_data"
+RESULT_JSON=ROOT/"reproduced"/"SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json"
 
 # Frozen OMI-3078 synthetic models.
 LATENT_INTERCEPT=1.25
