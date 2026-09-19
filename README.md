@@ -1,5 +1,7 @@
 # Evaluation infrastructure can distort behavioral effects in language-model experiments
 
+[![reproducibility](https://github.com/Kane11378/llm-evaluation-measurement-integrity/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/Kane11378/llm-evaluation-measurement-integrity/actions/workflows/reproducibility.yml)
+
 Public reproducibility package accompanying the manuscript by **Kang Wang**.
 
 This repository contains the intentionally released scientific materials needed to audit and reproduce the manuscript's analytic, deterministic-synthetic and frozen empirical results. It is **not** a mirror of the author's private Pharos research repository.
