@@ -34,16 +34,17 @@ def box(ax, x, y, w, h, text, fs=9, ls="-"):
 
 def figure1():
     nodes = pd.read_csv(DATA / "fig1_pipeline_nodes.csv")
-    edges = pd.read_csv(DATA / "fig1_pipeline_edges.csv")
+    labels = dict(zip(nodes.id, nodes.label))
     fig = plt.figure(figsize=(12, 7.6))
-    gs = fig.add_gridspec(2, 2, height_ratios=[0.8, 1.2], width_ratios=[1.7, 1.0])
+    gs = fig.add_gridspec(2, 2, height_ratios=[0.82, 1.18], width_ratios=[1.7, 1.0])
     a = fig.add_subplot(gs[0,0]); b = fig.add_subplot(gs[0,1])
     c = fig.add_subplot(gs[1,0]); d = fig.add_subplot(gs[1,1])
     for ax, letter, title in [(a,"a","Matched provenance intervention"),
                               (b,"b","Computational necessity"),
                               (c,"c","Measurement chain"),
                               (d,"d","Identification versus detection")]:
-        ax.set_axis_off(); ax.set_title(f"{letter}  {title}", loc="left", fontweight="bold", fontsize=11)
+        ax.set_axis_off()
+        ax.set_title(f"{letter}  {title}", loc="left", fontweight="bold", fontsize=11)
 
     a.set_xlim(0,1); a.set_ylim(0,1)
     a.text(.02,.76,"z=0",fontweight="bold"); a.text(.02,.38,"z=1",fontweight="bold")
@@ -60,28 +61,50 @@ def figure1():
     b.annotate("",(.66,.41),(.34,.41),arrowprops=dict(arrowstyle="->"))
     b.text(.04,.07,"Same prompt + nondesignated information.\nTask/oracle necessity ≠ internal neural mechanism.",fontsize=8)
 
-    labels = dict(zip(nodes.id, nodes.label))
-    xy = {"unit":(.06,.68),"c0":(.23,.80),"c1":(.23,.56),"worker":(.43,.68),
-          "complete":(.60,.68),"raw":(.77,.68),"extract":(.77,.38),
-          "score":(.60,.38),"aggregate":(.43,.38),"infer":(.23,.38),
-          "berr":(.43,.08),"ifail":(.67,.08)}
+    # Panel c: deliberately arranged as a serpentine pipeline to avoid edge/text overlap.
     c.set_xlim(0,1); c.set_ylim(0,1)
-    for _,r in edges.iterrows():
-        x0,y0=xy[r.source]; x1,y1=xy[r.target]
-        c.annotate("",(x1,y1),(x0,y0),arrowprops=dict(
-            arrowstyle="->",linewidth=.8,
-            linestyle="--" if r.path_type in ("failure","classification") else "-"))
-    for _,r in nodes.iterrows():
-        x,y=xy[r.id]
-        box(c,x-.065,y-.045,.13,.09,"\n".join(textwrap.wrap(labels[r.id],18)),fs=6.8,
-            ls="--" if r.id=="ifail" else "-")
-    c.text(.02,.96,"Solid: intended path; dashed: classification/integrity branches.",fontsize=7)
+    xy = {
+        "unit":(.06,.72), "c0":(.22,.83), "c1":(.22,.61),
+        "worker":(.40,.72), "complete":(.58,.72), "raw":(.78,.72),
+        "extract":(.78,.42), "score":(.58,.42), "aggregate":(.40,.42), "infer":(.22,.42),
+        "berr":(.58,.12), "ifail":(.80,.12)
+    }
+    widths = {"unit":.12,"c0":.14,"c1":.14,"worker":.14,"complete":.14,"raw":.14,
+              "extract":.14,"score":.14,"aggregate":.14,"infer":.14,"berr":.17,"ifail":.17}
+    heights = {k:.10 for k in xy}; heights["berr"]=.12; heights["ifail"]=.12
+
+    def center(k): return xy[k]
+    def draw_arrow(src,dst,style="-"):
+        x0,y0=center(src); x1,y1=center(dst)
+        c.annotate("", xy=(x1,y1), xytext=(x0,y0),
+                   arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=style,
+                                   shrinkA=18,shrinkB=18))
+
+    # Draw intended path first, then branches.
+    for src,dst in [("unit","c0"),("unit","c1"),("c0","worker"),("c1","worker"),
+                    ("worker","complete"),("complete","raw"),("raw","extract"),
+                    ("extract","score"),("score","aggregate"),("aggregate","infer")]:
+        draw_arrow(src,dst)
+    draw_arrow("worker","berr","--")
+    draw_arrow("berr","score","--")
+    draw_arrow("complete","ifail","--")
+
+    for k,(x,y) in xy.items():
+        label=labels[k]
+        if k=="berr": label="Behavioral error:\ncompleted/readable\nnonexact"
+        if k=="ifail": label="Integrity failure:\nplanned observation\nabsent"
+        box(c,x-widths[k]/2,y-heights[k]/2,widths[k],heights[k],label,
+            fs=6.9 if k not in ("berr","ifail") else 6.5,
+            ls="--" if k=="ifail" else "-")
+    c.text(.02,.95,"Solid: intended measurement path   ·   dashed: classification / integrity branches",
+           fontsize=7.2)
 
     d.set_xlim(0,1); d.set_ylim(0,1)
     box(d,.12,.63,.76,.18,"Identification\nWhat intervention is isolated under assumptions",fs=9)
     box(d,.12,.31,.76,.18,"Detection\nWhat observed data support statistically",fs=9)
     d.text(.5,.08,"An identified estimand can yield a non-detection.",
            ha="center",fontweight="bold",fontsize=8)
+
     fig.suptitle("Identification and measurement pipeline for contextual provenance experiments",
                  fontsize=14, fontweight="bold")
     fig.tight_layout()
@@ -172,21 +195,25 @@ def figure3():
     d=pd.read_csv(DATA/"fig3_empirical_ladder.csv")
     fig,ax=plt.subplots(figsize=(13,8.3)); ax.axis("off")
     cols=[.01,.18,.43,.71]; widths=[22,34,38,40]
-    headers=["Observed failure","Scientific threat","Prospective safeguard","OMI anchor / preservation"]
-    for x,h in zip(cols,headers): ax.text(x,.97,h,transform=ax.transAxes,fontweight="bold",fontsize=10,va="top")
+    headers=["Observed failure","Scientific threat","Prospective safeguard","Empirical anchor"]
+    for x,h in zip(cols,headers):
+        ax.text(x,.97,h,transform=ax.transAxes,fontweight="bold",fontsize=10,va="top")
     top=.91; step=.125
     for k,(_,r) in enumerate(d.iterrows()):
         y=top-k*step
-        if k%2==0: ax.add_patch(plt.Rectangle((0,y-.10),1,.11,transform=ax.transAxes,facecolor=".96",edgecolor=".85"))
+        if k%2==0:
+            ax.add_patch(plt.Rectangle((0,y-.10),1,.11,transform=ax.transAxes,
+                                       facecolor=".96",edgecolor=".85"))
         vals=[f"{int(r.order)}. {r.incident}",r.scientific_threat,r.prospective_safeguard,
-              f"{r.omi_empirical_example}; historical result preserved={r.historical_result_preserved}"]
+              str(r.omi_empirical_example)]
         for x,val,w in zip(cols,vals,widths):
             ax.text(x,y,"\n".join(textwrap.wrap(str(val),w)),transform=ax.transAxes,
                     fontsize=8.2,va="top",fontweight="bold" if x==cols[0] else "normal")
-    ax.set_title("OMI empirical failure–repair ladder — prospective safeguards, historical artifacts preserved",
+    ax.set_title("Measurement failures and prospective safeguards in OMI",
                  loc="left",fontweight="bold",fontsize=13)
-    ax.text(.01,.015,"Measurement hardening, not accumulation of positive behavioral evidence.",
-            transform=ax.transAxes,fontsize=9,fontweight="bold")
+    ax.text(.01,.015,
+            "Historical states were preserved; the sequence represents measurement hardening, not accumulation of positive evidence.",
+            transform=ax.transAxes,fontsize=8.8,fontweight="bold")
     save(fig,"Figure3")
 
 def figure4():
@@ -207,8 +234,11 @@ def figure4():
     ax.set_yticks(y); ax.set_yticklabels(labels,fontsize=8)
     ax.set_xlim(-.10,.18)
     ax.set_xlabel("LOCAL − CROSS effect / frozen depth contrast")
-    ax.set_title("Frozen OMI effect estimates\nPoint-only rows have no newly generated confidence interval",
+    ax.set_title("Confirmatory and exploratory provenance contrasts in OMI",
                  loc="left",fontweight="bold")
+    ax.text(0.0,1.01,
+            "Confidence intervals are shown only where they were part of the frozen confirmatory result.",
+            transform=ax.transAxes,fontsize=8,va="bottom")
     ax.grid(axis="x",linewidth=.4,alpha=.4)
     fig.tight_layout()
     save(fig,"Figure4")
