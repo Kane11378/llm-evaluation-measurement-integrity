@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   reproduce:
@@ -37,62 +37,67 @@ jobs:
         run: python analysis/validate_reproduction.py
 
       - name: Render figures from frozen public data
-        run: python analysis/reproduce_figures.py
-
-      - name: Verify expected figure formats
         run: |
-          for n in 1 2 3 4; do
-            test -s "figures/Figure${n}.svg"
-            test -s "figures/Figure${n}.pdf"
-            test -s "figures/Figure${n}.png"
-          done
+          python analysis/reproduce_figures.py
+          mkdir -p reproduced_figures
+          cp figures/Figure*.svg figures/Figure*.pdf figures/Figure*.png reproduced_figures/
 
-      - name: Build final figure hash manifest
+      - name: Validate deterministic rendered PNG identities
         run: |
           python - <<'PY'
-          import hashlib, json, os
+          import hashlib
           from pathlib import Path
-          root=Path("figures")
-          files={}
-          for p in sorted(root.glob("Figure*.*")):
-              if p.suffix.lower() not in {".svg",".pdf",".png"}:
-                  continue
-              b=p.read_bytes()
-              files[p.name]={"sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b)}
-          out={
-              "schema":"OMI_PUBLIC_FIGURE_FREEZE_V1",
-              "source_commit":os.environ["GITHUB_SHA"],
-              "workflow_run_id":os.environ["GITHUB_RUN_ID"],
-              "files":files
+          expected={
+            "Figure1.png":"7743e5dbf9782b9c52712f95ea30191737a0675c3ca8f226fc3ca1eceac3f347",
+            "Figure2.png":"dc579fc8287d1f325d98aa7667ffab5cc49fe03da7573c551f444fe4f61b086c",
+            "Figure3.png":"2725d9f569d010676365d46471822df58c6c957f6211ff0df62c3e152617fd55",
+            "Figure4.png":"4dce8b78f0c7c3e0479c7ad812b747bef5d9e0a2c621a387f9ecdf2b69459f95",
           }
-          (root/"FINAL_FIGURE_SHA256_MANIFEST.json").write_text(
-              json.dumps(out,indent=2)+"\n",encoding="utf-8")
-          print(json.dumps(out,indent=2))
+          for name,want in expected.items():
+              got=hashlib.sha256((Path("figures")/name).read_bytes()).hexdigest()
+              if got != want:
+                  raise SystemExit(f"{name} regenerated hash mismatch: {got} != {want}")
+              print(name,got)
           PY
 
-      - name: Upload rendered figures and reproducibility receipts
+      - name: Restore and verify frozen publication figure identities
+        run: |
+          git checkout HEAD -- figures/Figure1.svg figures/Figure1.pdf figures/Figure1.png             figures/Figure2.svg figures/Figure2.pdf figures/Figure2.png             figures/Figure3.svg figures/Figure3.pdf figures/Figure3.png             figures/Figure4.svg figures/Figure4.pdf figures/Figure4.png             figures/FINAL_FIGURE_SHA256_MANIFEST.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          expected={
+            "Figure1.pdf":"a68577f8d75613c34183b3363bd2d5ee65fdbcdae1dbdd42a2abfad3f51e8753",
+            "Figure1.png":"7743e5dbf9782b9c52712f95ea30191737a0675c3ca8f226fc3ca1eceac3f347",
+            "Figure1.svg":"bcd6f22927d8cbfb9441087018493fc76d68f807b7dc0ec2cf2e9bea5acdf916",
+            "Figure2.pdf":"41f131cbf1e70742deac7eea104730b01b317a0fd9f195274b47093cfa91007c",
+            "Figure2.png":"dc579fc8287d1f325d98aa7667ffab5cc49fe03da7573c551f444fe4f61b086c",
+            "Figure2.svg":"0bcce19eab2277d41e81fb5b34680ab620a6ce43dc7115f83d63804415fb12ee",
+            "Figure3.pdf":"d4635bad3c36b8e31558e725170ae6d5b819613adba0c132cf59a9fa0915593e",
+            "Figure3.png":"2725d9f569d010676365d46471822df58c6c957f6211ff0df62c3e152617fd55",
+            "Figure3.svg":"8a44be71a6bf6919a06cc796183ad4a35d5db42e7af0bf54cf92f20755530e66",
+            "Figure4.pdf":"598807b3a8d0a39f1601795679c869b49eab32fa159052460dc59013db0157f4",
+            "Figure4.png":"4dce8b78f0c7c3e0479c7ad812b747bef5d9e0a2c621a387f9ecdf2b69459f95",
+            "Figure4.svg":"baeaefa478f8c41de2a0bca497066a396069248a71363e6c0d5fb0d077cd8649",
+          }
+          manifest=json.loads(Path("figures/FINAL_FIGURE_SHA256_MANIFEST.json").read_text())
+          for name,want in expected.items():
+              got=hashlib.sha256((Path("figures")/name).read_bytes()).hexdigest()
+              if got != want:
+                  raise SystemExit(f"frozen {name} hash mismatch: {got} != {want}")
+              if manifest["files"][name]["sha256"] != want:
+                  raise SystemExit(f"manifest mismatch for {name}")
+              print(name,got)
+          PY
+
+      - name: Upload reproducibility receipts
         uses: actions/upload-artifact@v4
         with:
-          name: reproducibility-rendered-figures
+          name: reproducibility-receipts
           path: |
-            figures/Figure*.svg
-            figures/Figure*.pdf
-            figures/Figure*.png
+            reproduced_figures/
             figures/FINAL_FIGURE_SHA256_MANIFEST.json
             n28_recompute.txt
             n124_recompute.txt
             reproduced/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
           if-no-files-found: error
-
-      - name: Freeze validated publication figures in repository
-        if: github.event_name == 'push' && github.actor != 'github-actions[bot]'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add figures/Figure*.svg figures/Figure*.pdf figures/Figure*.png figures/FINAL_FIGURE_SHA256_MANIFEST.json
-          if git diff --cached --quiet; then
-            echo "No figure changes to freeze."
-          else
-            git commit -m "Freeze validated publication figures [skip ci]"
-            git push
-          fi
