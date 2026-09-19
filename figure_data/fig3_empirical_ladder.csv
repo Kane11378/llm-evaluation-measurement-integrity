@@ -1,4 +1,4 @@
-order,incident,failure_class,scientific_threat,prospective_safeguard,historical_result_preserved,omi_empirical_example,source
+order,incident,failure_class,scientific_threat,prospective_safeguard,historical_result_preserved,empirical_example,source
 1,Parent-value leakage,Identification,Designated context not computationally necessary,Remove parent value from current prompt; verify prompt-alone closure,yes,Earlier R2/MCAL S/T prompts reprinted parent values,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §2; anchor commit c97bd74d1146c52ef336328fd957cedcf6db5329
 2,Scorer censoring,Measurement,Completed/readable model errors could leave denominator,Exact deterministic scorer; retain all completed/readable nonexact outputs as errors,yes,Prospective scorer repair after scorer audit,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §3
 3,Stochastic finalizer,Measurement,Second model call could change worker measurement,Remove unnecessary stochastic finalizer,yes,Finalizer removed prospectively,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §4
