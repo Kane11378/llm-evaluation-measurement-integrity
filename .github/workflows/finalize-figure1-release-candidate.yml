@@ -1,0 +1,147 @@
+name: finalize-figure1-release-candidate
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/finalize-figure1-release-candidate.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Patch Figure 1 source
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path("analysis/reproduce_figures.py")
+          s=p.read_text(encoding="utf-8")
+
+          old='''def save(fig, stem):
+              for ext in FORMATS:
+                  kw = {"bbox_inches": "tight"}
+                  if ext == "png":
+                      kw["dpi"] = 300
+                  fig.savefig(OUT / f"{stem}.{ext}", **kw)
+              plt.close(fig)
+          '''
+          new='''def save(fig, stem, pad_inches=None):
+              for ext in FORMATS:
+                  kw = {"bbox_inches": "tight"}
+                  if pad_inches is not None:
+                      kw["pad_inches"] = pad_inches
+                  if ext == "png":
+                      kw["dpi"] = 300
+                  fig.savefig(OUT / f"{stem}.{ext}", **kw)
+              plt.close(fig)
+          '''
+          if old not in s:
+              raise SystemExit("save block not found")
+          s=s.replace(old,new,1)
+
+          a=s.index("    # Panel c: compact two-row pipeline; detailed definitions remain in the legend/Methods.\n")
+          b=s.index("    d.set_xlim(0,1); d.set_ylim(0,1)\n",a)
+          panel='''    # Panel c: explicit two-row measurement pipeline. The main path is solid;
+              # integrity failure branches from the completion/readability gate.
+              c.set_xlim(0,1); c.set_ylim(0,1)
+              top=[("Independent\\ninstance",.11),
+                   ("Matched pair\\nz=0 / z=1",.305),
+                   ("Worker\\nresponse",.50),
+                   ("Completion /\\nreadability",.695),
+                   ("Raw-response\\ncustody",.89)]
+              bottom=[("Instance-level\\ninference",.305),
+                      ("Within-instance\\naggregation",.50),
+                      ("Frozen\\nscore",.695),
+                      ("Deterministic\\nextraction",.89)]
+              bw=.135; bh=.12; yt=.69; yb=.39
+
+              for (_,x0),(_,x1) in zip(top[:-1],top[1:]):
+                  c.plot([x0+bw/2,x1-bw/2],[yt,yt],color="black",lw=.9,zorder=1)
+              c.plot([top[-1][1],top[-1][1]],[yt-bh/2,yb+bh/2],color="black",lw=.9,zorder=1)
+              for (_,x0),(_,x1) in zip(bottom[:0:-1],bottom[-2::-1]):
+                  c.plot([x0-bw/2,x1+bw/2],[yb,yb],color="black",lw=.9,zorder=1)
+
+              for label,x in top:
+                  box(c,x-bw/2,yt-bh/2,bw,bh,label,fs=7.2)
+              for label,x in bottom:
+                  box(c,x-bw/2,yb-bh/2,bw,bh,label,fs=7.2)
+
+              c.plot([.695,.695],[yb-bh/2,.305],color="black",lw=.8,zorder=1)
+              c.text(.695,.255,"nonexact → score 0\\n(retained in denominator)",
+                     ha="center",va="center",fontsize=6.6,
+                     bbox=dict(facecolor="white",edgecolor="none",pad=.9),zorder=4)
+
+              ix=.79; iy=.060; iw=.18; ih=.105
+              xgate=.695; ygate=yt-bh/2; branch_y=.575
+              c.plot([xgate,xgate],[ygate,branch_y],color="black",lw=.9,ls="--",zorder=1)
+              c.plot([xgate,ix],[branch_y,branch_y],color="black",lw=.9,ls="--",zorder=1)
+              c.annotate("",xy=(ix,iy+ih),xytext=(ix,branch_y),
+                         arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle="--",
+                                         shrinkA=0,shrinkB=2,zorder=1))
+              box(c,ix-iw/2,iy,iw,ih,"Integrity failure:\\nplanned observation absent",fs=6.7,ls="--")
+
+              c.text(.02,.95,"Solid: intended measurement path   ·   dashed: integrity branch",
+                     fontsize=7.2)
+
+          '''
+          s=s[:a]+panel+s[b:]
+          s=s.replace('    save(fig, "Figure1")\n','    save(fig, "Figure1", pad_inches=0.08)\n',1)
+          p.write_text(s,encoding="utf-8")
+          PY
+
+      - name: Install pinned dependencies
+        run: pip install -r requirements.txt
+
+      - name: Regenerate repaired Figure 1
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/frozen_old
+          cp figures/Figure2.* figures/Figure3.* figures/Figure4.* /tmp/frozen_old/
+          python analysis/reproduce_figures.py
+          cp /tmp/frozen_old/Figure2.* /tmp/frozen_old/Figure3.* /tmp/frozen_old/Figure4.* figures/
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          files={}
+          for p in sorted(Path("figures").glob("Figure*.*")):
+              if p.suffix.lower() in {".svg",".pdf",".png"}:
+                  b=p.read_bytes()
+                  files[p.name]={"sha256":hashlib.sha256(b).hexdigest(),"bytes":len(b)}
+          out={
+              "schema":"OMI_PUBLIC_FIGURE_FREEZE_V1",
+              "source_commit":None,
+              "workflow_run_id":None,
+              "files":files,
+              "note":"Release-candidate figure freeze after Figure 1 layout-only repair; Figures 2–4 retain their previously frozen bytes."
+          }
+          Path("figures/FINAL_FIGURE_SHA256_MANIFEST.json").write_text(json.dumps(out,indent=2)+"\n")
+          PY
+
+      - name: Reverify frozen science
+        run: |
+          python analysis/recompute_n28.py
+          python analysis/recompute_n124.py
+          python analysis/sensitivity_surface_framework.py
+          python analysis/validate_reproduction.py
+
+      - name: Commit synchronized Figure 1
+        run: |
+          set -euo pipefail
+          git config user.name "Kane"
+          git config user.email "168049109+Kane11378@users.noreply.github.com"
+          git add analysis/reproduce_figures.py figures/Figure1.pdf figures/Figure1.png figures/Figure1.svg figures/FINAL_FIGURE_SHA256_MANIFEST.json
+          git commit -m "Synchronize repaired Figure 1 for v1.0.0"
+          git push origin HEAD:main
