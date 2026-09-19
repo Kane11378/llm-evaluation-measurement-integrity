@@ -209,7 +209,7 @@ def figure3():
             ax.add_patch(plt.Rectangle((0,y-.10),1,.11,transform=ax.transAxes,
                                        facecolor=".96",edgecolor=".85"))
         vals=[f"{int(r.order)}. {r.incident}",r.scientific_threat,r.prospective_safeguard,
-              str(r.omi_empirical_example)]
+              str(r.empirical_example)]
         for x,val,w in zip(cols,vals,widths):
             ax.text(x,y,"\n".join(textwrap.wrap(str(val),w)),transform=ax.transAxes,
                     fontsize=8.2,va="top",fontweight="bold" if x==cols[0] else "normal")
