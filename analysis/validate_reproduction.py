@@ -47,6 +47,28 @@ for name, keys in KEYS.items():
     if f.shape != r.shape:
         raise SystemExit(f"{name}: shape mismatch {f.shape} != {r.shape}")
 
+    if name == "fig2_bank_completion_surface.csv":
+        # This panel has an exact analytic target. Validate each file against the
+        # identity rather than relying on floating-coordinate row alignment.
+        for label, d in (("frozen",f),("reproduced",r)):
+            B=d["bank_size_B"].to_numpy(dtype=float)
+            h=d["per_call_hazard_h"].to_numpy(dtype=float)
+            p=d["full_bank_probability"].to_numpy(dtype=float)
+            stop=d["stop_probability"].to_numpy(dtype=float)
+            expected=np.power(1.0-h,B)
+            if not np.allclose(p,expected,rtol=1e-12,atol=1e-12):
+                raise SystemExit(f"{name}:{label}: P(full) identity failure")
+            if not np.allclose(stop,1.0-expected,rtol=1e-12,atol=1e-12):
+                raise SystemExit(f"{name}:{label}: stop-probability identity failure")
+        if set(f["bank_size_B"]) != set(r["bank_size_B"]):
+            raise SystemExit(f"{name}: bank-size coordinate mismatch")
+        if not np.allclose(sorted(f["per_call_hazard_h"].unique()),
+                           sorted(r["per_call_hazard_h"].unique()),
+                           rtol=1e-12,atol=1e-15):
+            raise SystemExit(f"{name}: hazard coordinate mismatch")
+        print(f"PASS {name}: {len(f)} rows; analytic identity verified")
+        continue
+
     # Row order is not scientific content. Align by the frozen design coordinates.
     f=f.sort_values(keys).reset_index(drop=True)
     r=r.sort_values(keys).reset_index(drop=True)
@@ -63,4 +85,4 @@ for name, keys in KEYS.items():
                 raise SystemExit(f"{name}:{col}: categorical/string mismatch")
     print(f"PASS {name}: {len(f)} rows")
 
-print(f"ALL SURFACES PASS within atol={ATOL:g}, rtol={RTOL:g}")
+print(f"ALL SURFACES PASS within atol={ATOL:g}, rtol={RTOL:g}; analytic bank identity verified")
