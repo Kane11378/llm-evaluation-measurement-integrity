@@ -11,15 +11,16 @@
     "CROSS": 131
   },
   "estimate_LOCAL_minus_CROSS": 0.041666666666666664,
-  "sd_instance_effect": 0.2060055,
-  "se": 0.0389314,
-  "t": 1.0703,
+  "sd_instance_effect": 0.20600551353043509,
+  "se": 0.03893138267926306,
+  "t": 1.0702591020190135,
   "df": 27,
-  "p_two_sided": 0.29398,
+  "p_two_sided": 0.2939774163264126,
   "ci95": [
-    -0.03821,
-    0.12155
+    -0.038213932363417226,
+    0.12154726569675056
   ],
+  "canonical_corrected_ledger_sha256": "8ce6a19f9e62fd29ecef0ff1ec62708690c1e462c0d75b69dfc7ad1c846382c1",
   "interpretation": "no detected overall provenance effect; not equivalence",
   "reconstruction_note": "Derived ledger was mechanically reconstructed from preserved raw responses under the unchanged frozen oracle/scorer/analyzer; no behavioral replay."
 }

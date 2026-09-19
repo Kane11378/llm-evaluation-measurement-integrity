@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Recompute corrected N=28 confirmation
+        run: python analysis/recompute_n28.py | tee n28_recompute.txt
+
       - name: Recompute fresh N=124 confirmation
         run: python analysis/recompute_n124.py | tee n124_recompute.txt
 
@@ -76,6 +79,7 @@ jobs:
             figures/Figure*.pdf
             figures/Figure*.png
             figures/FINAL_FIGURE_SHA256_MANIFEST.json
+            n28_recompute.txt
             n124_recompute.txt
             reproduced/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
           if-no-files-found: error
