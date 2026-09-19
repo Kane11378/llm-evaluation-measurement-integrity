@@ -33,8 +33,6 @@ def box(ax, x, y, w, h, text, fs=9, ls="-"):
     ax.text(x+w/2, y+h/2, text, ha="center", va="center", fontsize=fs, wrap=True)
 
 def figure1():
-    nodes = pd.read_csv(DATA / "fig1_pipeline_nodes.csv")
-    labels = dict(zip(nodes.id, nodes.label))
     fig = plt.figure(figsize=(12, 7.6))
     gs = fig.add_gridspec(2, 2, height_ratios=[0.82, 1.18], width_ratios=[1.7, 1.0])
     a = fig.add_subplot(gs[0,0]); b = fig.add_subplot(gs[0,1])
@@ -61,42 +59,40 @@ def figure1():
     b.annotate("",(.66,.41),(.34,.41),arrowprops=dict(arrowstyle="->"))
     b.text(.04,.07,"Same prompt + nondesignated information.\nTask/oracle necessity ≠ internal neural mechanism.",fontsize=8)
 
-    # Panel c: deliberately arranged as a serpentine pipeline to avoid edge/text overlap.
+    # Panel c: compact two-row pipeline; detailed definitions remain in the legend/Methods.
     c.set_xlim(0,1); c.set_ylim(0,1)
-    xy = {
-        "unit":(.06,.72), "c0":(.22,.83), "c1":(.22,.61),
-        "worker":(.40,.72), "complete":(.58,.72), "raw":(.78,.72),
-        "extract":(.78,.42), "score":(.58,.42), "aggregate":(.40,.42), "infer":(.22,.42),
-        "berr":(.58,.12), "ifail":(.80,.12)
-    }
-    widths = {"unit":.12,"c0":.14,"c1":.14,"worker":.14,"complete":.14,"raw":.14,
-              "extract":.14,"score":.14,"aggregate":.14,"infer":.14,"berr":.17,"ifail":.17}
-    heights = {k:.10 for k in xy}; heights["berr"]=.12; heights["ifail"]=.12
+    top=[("Independent\ninstance",.08),
+         ("Matched pair\nz=0 / z=1",.28),
+         ("Worker\nresponse",.48),
+         ("Completion /\nreadability",.68),
+         ("Raw-response\ncustody",.88)]
+    bottom=[("Instance-level\ninference",.28),
+            ("Within-instance\naggregation",.48),
+            ("Frozen\nscore",.68),
+            ("Deterministic\nextraction",.88)]
+    bw=.145; bh=.12; yt=.69; yb=.37
+    for label,x in top:
+        box(c,x-bw/2,yt-bh/2,bw,bh,label,fs=7.2)
+    for label,x in bottom:
+        box(c,x-bw/2,yb-bh/2,bw,bh,label,fs=7.2)
 
-    def center(k): return xy[k]
-    def draw_arrow(src,dst,style="-"):
-        x0,y0=center(src); x1,y1=center(dst)
-        c.annotate("", xy=(x1,y1), xytext=(x0,y0),
-                   arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=style,
+    def arr(x0,y0,x1,y1,ls="-"):
+        c.annotate("",xy=(x1,y1),xytext=(x0,y0),
+                   arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=ls,
                                    shrinkA=18,shrinkB=18))
+    for x0,x1 in zip([.08,.28,.48,.68],[.28,.48,.68,.88]):
+        arr(x0,yt,x1,yt)
+    arr(.88,yt,.88,yb)
+    for x0,x1 in zip([.88,.68,.48],[.68,.48,.28]):
+        arr(x0,yb,x1,yb)
 
-    # Draw intended path first, then branches.
-    for src,dst in [("unit","c0"),("unit","c1"),("c0","worker"),("c1","worker"),
-                    ("worker","complete"),("complete","raw"),("raw","extract"),
-                    ("extract","score"),("score","aggregate"),("aggregate","infer")]:
-        draw_arrow(src,dst)
-    draw_arrow("worker","berr","--")
-    draw_arrow("berr","score","--")
-    draw_arrow("complete","ifail","--")
-
-    for k,(x,y) in xy.items():
-        label=labels[k]
-        if k=="berr": label="Behavioral error:\ncompleted/readable\nnonexact"
-        if k=="ifail": label="Integrity failure:\nplanned observation\nabsent"
-        box(c,x-widths[k]/2,y-heights[k]/2,widths[k],heights[k],label,
-            fs=6.9 if k not in ("berr","ifail") else 6.5,
-            ls="--" if k=="ifail" else "-")
-    c.text(.02,.95,"Solid: intended measurement path   ·   dashed: classification / integrity branches",
+    # Integrity failure is a side branch from the completion gate.
+    box(c,.59,.08,.18,.12,"Integrity failure:\nplanned observation absent",fs=6.7,ls="--")
+    arr(.68,yt,.68,.20,"--")
+    # Completed/readable nonexact behavior is retained by the score rather than dropped.
+    c.text(.68,.24,"nonexact → score 0\n(retained in denominator)",
+           ha="center",va="center",fontsize=6.6)
+    c.text(.02,.95,"Solid: intended measurement path   ·   dashed: integrity branch",
            fontsize=7.2)
 
     d.set_xlim(0,1); d.set_ylim(0,1)
@@ -235,10 +231,7 @@ def figure4():
     ax.set_xlim(-.10,.18)
     ax.set_xlabel("LOCAL − CROSS effect / frozen depth contrast")
     ax.set_title("Confirmatory and exploratory provenance contrasts in OMI",
-                 loc="left",fontweight="bold")
-    ax.text(0.0,1.01,
-            "Confidence intervals are shown only where they were part of the frozen confirmatory result.",
-            transform=ax.transAxes,fontsize=8,va="bottom")
+                 loc="left",fontweight="bold",pad=12)
     ax.grid(axis="x",linewidth=.4,alpha=.4)
     fig.tight_layout()
     save(fig,"Figure4")
