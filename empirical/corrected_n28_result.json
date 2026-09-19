@@ -1,0 +1,25 @@
+{
+  "analysis": "corrected_overall_confirmatory",
+  "independent_instances": 28,
+  "matched_pairs": 168,
+  "calls": {
+    "LOCAL": 168,
+    "CROSS": 168
+  },
+  "exact": {
+    "LOCAL": 138,
+    "CROSS": 131
+  },
+  "estimate_LOCAL_minus_CROSS": 0.041666666666666664,
+  "sd_instance_effect": 0.2060055,
+  "se": 0.0389314,
+  "t": 1.0703,
+  "df": 27,
+  "p_two_sided": 0.29398,
+  "ci95": [
+    -0.03821,
+    0.12155
+  ],
+  "interpretation": "no detected overall provenance effect; not equivalence",
+  "reconstruction_note": "Derived ledger was mechanically reconstructed from preserved raw responses under the unchanged frozen oracle/scorer/analyzer; no behavioral replay."
+}
