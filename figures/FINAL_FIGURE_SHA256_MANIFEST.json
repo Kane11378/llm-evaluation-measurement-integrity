@@ -1,19 +1,19 @@
 {
   "schema": "OMI_PUBLIC_FIGURE_FREEZE_V1",
-  "source_commit": "e376696ffd5206d3d1d9a9b68735bb888ee9129d",
-  "workflow_run_id": "35427716524",
+  "source_commit": null,
+  "workflow_run_id": null,
   "files": {
     "Figure1.pdf": {
-      "sha256": "a68577f8d75613c34183b3363bd2d5ee65fdbcdae1dbdd42a2abfad3f51e8753",
-      "bytes": 34601
+      "sha256": "ca0f486276c95c4d64232faa6062e489f56634e0beff7888b6f11df5864a9882",
+      "bytes": 34511
     },
     "Figure1.png": {
-      "sha256": "7743e5dbf9782b9c52712f95ea30191737a0675c3ca8f226fc3ca1eceac3f347",
-      "bytes": 380842
+      "sha256": "34d779ca6df5543a05d3c04713e4b84288603eee964568a37c07679345f42452",
+      "bytes": 384898
     },
     "Figure1.svg": {
-      "sha256": "bcd6f22927d8cbfb9441087018493fc76d68f807b7dc0ec2cf2e9bea5acdf916",
-      "bytes": 127711
+      "sha256": "6d157465c71580efdbaa9377c16b1113b451448b8b344154af419742a34d7406",
+      "bytes": 127313
     },
     "Figure2.pdf": {
       "sha256": "41f131cbf1e70742deac7eea104730b01b317a0fd9f195274b47093cfa91007c",
@@ -51,5 +51,6 @@
       "sha256": "baeaefa478f8c41de2a0bca497066a396069248a71363e6c0d5fb0d077cd8649",
       "bytes": 61592
     }
-  }
+  },
+  "note": "Release-candidate figure freeze after Figure 1 layout-only repair; Figures 2\u20134 retain their previously frozen bytes."
 }

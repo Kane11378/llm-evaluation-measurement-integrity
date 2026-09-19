@@ -17,9 +17,11 @@ DATA = ROOT / "figure_data"
 OUT = ROOT / "figures"
 FORMATS = ("svg", "pdf", "png")
 
-def save(fig, stem):
+def save(fig, stem, pad_inches=None):
     for ext in FORMATS:
         kw = {"bbox_inches": "tight"}
+        if pad_inches is not None:
+            kw["pad_inches"] = pad_inches
         if ext == "png":
             kw["dpi"] = 300
         fig.savefig(OUT / f"{stem}.{ext}", **kw)
@@ -59,42 +61,45 @@ def figure1():
     b.annotate("",(.66,.41),(.34,.41),arrowprops=dict(arrowstyle="->"))
     b.text(.04,.07,"Same prompt + nondesignated information.\nTask/oracle necessity ≠ internal neural mechanism.",fontsize=8)
 
-    # Panel c: compact two-row pipeline; detailed definitions remain in the legend/Methods.
+    # Panel c: explicit two-row measurement pipeline. The main path is solid;
+    # integrity failure branches from the completion/readability gate.
     c.set_xlim(0,1); c.set_ylim(0,1)
-    top=[("Independent\ninstance",.08),
-         ("Matched pair\nz=0 / z=1",.28),
-         ("Worker\nresponse",.48),
-         ("Completion /\nreadability",.68),
-         ("Raw-response\ncustody",.88)]
-    bottom=[("Instance-level\ninference",.28),
-            ("Within-instance\naggregation",.48),
-            ("Frozen\nscore",.68),
-            ("Deterministic\nextraction",.88)]
-    bw=.145; bh=.12; yt=.69; yb=.37
+    top=[("Independent\ninstance",.11),
+         ("Matched pair\nz=0 / z=1",.305),
+         ("Worker\nresponse",.50),
+         ("Completion /\nreadability",.695),
+         ("Raw-response\ncustody",.89)]
+    bottom=[("Instance-level\ninference",.305),
+            ("Within-instance\naggregation",.50),
+            ("Frozen\nscore",.695),
+            ("Deterministic\nextraction",.89)]
+    bw=.135; bh=.12; yt=.69; yb=.39
 
-    def arr(x0,y0,x1,y1,ls="-"):
-        c.annotate("",xy=(x1,y1),xytext=(x0,y0),
-                   arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=ls,
-                                   shrinkA=18,shrinkB=18,zorder=1))
-
-    # Draw connectors first so the opaque boxes mask line segments inside nodes.
-    for x0,x1 in zip([.08,.28,.48,.68],[.28,.48,.68,.88]):
-        arr(x0,yt,x1,yt)
-    arr(.88,yt,.88,yb)
-    for x0,x1 in zip([.88,.68,.48],[.68,.48,.28]):
-        arr(x0,yb,x1,yb)
-    arr(.68,yt,.68,.20,"--")
+    for (_,x0),(_,x1) in zip(top[:-1],top[1:]):
+        c.plot([x0+bw/2,x1-bw/2],[yt,yt],color="black",lw=.9,zorder=1)
+    c.plot([top[-1][1],top[-1][1]],[yt-bh/2,yb+bh/2],color="black",lw=.9,zorder=1)
+    for (_,x0),(_,x1) in zip(bottom[:0:-1],bottom[-2::-1]):
+        c.plot([x0-bw/2,x1+bw/2],[yb,yb],color="black",lw=.9,zorder=1)
 
     for label,x in top:
         box(c,x-bw/2,yt-bh/2,bw,bh,label,fs=7.2)
     for label,x in bottom:
         box(c,x-bw/2,yb-bh/2,bw,bh,label,fs=7.2)
 
-    # Integrity failure is a side branch from the completion gate.
-    box(c,.59,.08,.18,.12,"Integrity failure:\nplanned observation absent",fs=6.7,ls="--")
-    # Completed/readable nonexact behavior is retained by the score rather than dropped.
-    c.text(.68,.24,"nonexact → score 0\n(retained in denominator)",
-           ha="center",va="center",fontsize=6.6)
+    c.plot([.695,.695],[yb-bh/2,.305],color="black",lw=.8,zorder=1)
+    c.text(.695,.255,"nonexact → score 0\n(retained in denominator)",
+           ha="center",va="center",fontsize=6.6,
+           bbox=dict(facecolor="white",edgecolor="none",pad=.9),zorder=4)
+
+    ix=.79; iy=.060; iw=.18; ih=.105
+    xgate=.695; ygate=yt-bh/2; branch_y=.575
+    c.plot([xgate,xgate],[ygate,branch_y],color="black",lw=.9,ls="--",zorder=1)
+    c.plot([xgate,ix],[branch_y,branch_y],color="black",lw=.9,ls="--",zorder=1)
+    c.annotate("",xy=(ix,iy+ih),xytext=(ix,branch_y),
+               arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle="--",
+                               shrinkA=0,shrinkB=2,zorder=1))
+    box(c,ix-iw/2,iy,iw,ih,"Integrity failure:\nplanned observation absent",fs=6.7,ls="--")
+
     c.text(.02,.95,"Solid: intended measurement path   ·   dashed: integrity branch",
            fontsize=7.2)
 
@@ -107,7 +112,7 @@ def figure1():
     fig.suptitle("Identification and measurement pipeline for contextual provenance experiments",
                  fontsize=14, fontweight="bold")
     fig.tight_layout()
-    save(fig, "Figure1")
+    save(fig, "Figure1", pad_inches=0.08)
 
 def pivot(path, index, columns, value):
     d = pd.read_csv(DATA / path)
