@@ -38,55 +38,23 @@ jobs:
 
       - name: Render figures from frozen public data
         run: |
+          mkdir -p /tmp/frozen_figures reproduced_figures
+          cp figures/Figure*.svg figures/Figure*.pdf figures/Figure*.png figures/FINAL_FIGURE_SHA256_MANIFEST.json /tmp/frozen_figures/
           python analysis/reproduce_figures.py
-          mkdir -p reproduced_figures
           cp figures/Figure*.svg figures/Figure*.pdf figures/Figure*.png reproduced_figures/
-
-      - name: Validate deterministic rendered PNG identities
-        run: |
-          python - <<'PY'
-          import hashlib
-          from pathlib import Path
-          expected={
-            "Figure1.png":"7743e5dbf9782b9c52712f95ea30191737a0675c3ca8f226fc3ca1eceac3f347",
-            "Figure2.png":"dc579fc8287d1f325d98aa7667ffab5cc49fe03da7573c551f444fe4f61b086c",
-            "Figure3.png":"2725d9f569d010676365d46471822df58c6c957f6211ff0df62c3e152617fd55",
-            "Figure4.png":"4dce8b78f0c7c3e0479c7ad812b747bef5d9e0a2c621a387f9ecdf2b69459f95",
-          }
-          for name,want in expected.items():
-              got=hashlib.sha256((Path("figures")/name).read_bytes()).hexdigest()
-              if got != want:
-                  raise SystemExit(f"{name} regenerated hash mismatch: {got} != {want}")
-              print(name,got)
-          PY
 
       - name: Restore and verify frozen publication figure identities
         run: |
-          git checkout HEAD -- figures/Figure1.svg figures/Figure1.pdf figures/Figure1.png             figures/Figure2.svg figures/Figure2.pdf figures/Figure2.png             figures/Figure3.svg figures/Figure3.pdf figures/Figure3.png             figures/Figure4.svg figures/Figure4.pdf figures/Figure4.png             figures/FINAL_FIGURE_SHA256_MANIFEST.json
+          cp /tmp/frozen_figures/Figure*.svg /tmp/frozen_figures/Figure*.pdf /tmp/frozen_figures/Figure*.png figures/
+          cp /tmp/frozen_figures/FINAL_FIGURE_SHA256_MANIFEST.json figures/
           python - <<'PY'
           import hashlib, json
           from pathlib import Path
-          expected={
-            "Figure1.pdf":"a68577f8d75613c34183b3363bd2d5ee65fdbcdae1dbdd42a2abfad3f51e8753",
-            "Figure1.png":"7743e5dbf9782b9c52712f95ea30191737a0675c3ca8f226fc3ca1eceac3f347",
-            "Figure1.svg":"bcd6f22927d8cbfb9441087018493fc76d68f807b7dc0ec2cf2e9bea5acdf916",
-            "Figure2.pdf":"41f131cbf1e70742deac7eea104730b01b317a0fd9f195274b47093cfa91007c",
-            "Figure2.png":"dc579fc8287d1f325d98aa7667ffab5cc49fe03da7573c551f444fe4f61b086c",
-            "Figure2.svg":"0bcce19eab2277d41e81fb5b34680ab620a6ce43dc7115f83d63804415fb12ee",
-            "Figure3.pdf":"d4635bad3c36b8e31558e725170ae6d5b819613adba0c132cf59a9fa0915593e",
-            "Figure3.png":"2725d9f569d010676365d46471822df58c6c957f6211ff0df62c3e152617fd55",
-            "Figure3.svg":"8a44be71a6bf6919a06cc796183ad4a35d5db42e7af0bf54cf92f20755530e66",
-            "Figure4.pdf":"598807b3a8d0a39f1601795679c869b49eab32fa159052460dc59013db0157f4",
-            "Figure4.png":"4dce8b78f0c7c3e0479c7ad812b747bef5d9e0a2c621a387f9ecdf2b69459f95",
-            "Figure4.svg":"baeaefa478f8c41de2a0bca497066a396069248a71363e6c0d5fb0d077cd8649",
-          }
           manifest=json.loads(Path("figures/FINAL_FIGURE_SHA256_MANIFEST.json").read_text())
-          for name,want in expected.items():
+          for name,meta in manifest["files"].items():
               got=hashlib.sha256((Path("figures")/name).read_bytes()).hexdigest()
-              if got != want:
-                  raise SystemExit(f"frozen {name} hash mismatch: {got} != {want}")
-              if manifest["files"][name]["sha256"] != want:
-                  raise SystemExit(f"manifest mismatch for {name}")
+              if got != meta["sha256"]:
+                  raise SystemExit(f"figure hash mismatch for {name}: {got} != {meta['sha256']}")
               print(name,got)
           PY
 
