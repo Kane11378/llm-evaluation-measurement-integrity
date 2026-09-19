@@ -1,4 +1,4 @@
-# v1.0.0-nmi-submission
+# v1.0.0
 
 Reproducibility release accompanying the manuscript:
 
@@ -13,9 +13,8 @@ This release contains:
 - exact analytic measurement results;
 - deterministic sensitivity-surface code and frozen figure data;
 - CI-validated Figure 1–4 source and rendered files;
-- corrected N=28 confirmatory result summary;
-- fresh N=124 full instance-level primary/stage data;
-- one-command N=124 confirmatory recomputation;
+- corrected N=28 instance-level data and independent recomputation;
+- fresh N=124 instance-level primary/stage data and independent recomputation;
 - identification and reproducibility protocols;
 - claim-boundary documentation;
 - cryptographic figure manifest.
@@ -38,14 +37,14 @@ Fresh prospective N=124 depth primary:
 ## Reproducibility
 
 The public GitHub Actions workflow:
-- recomputes the N=124 primary;
+- recomputes both the corrected N=28 and fresh N=124 analyses;
 - regenerates deterministic sensitivity surfaces;
 - validates regenerated surfaces against frozen data/analytic identities;
 - renders SVG/PDF/300-dpi PNG figures;
-- freezes figure hashes.
+- verifies the frozen publication figure manifest.
 
-No provider/model calls are required to reproduce the analytic/synthetic figures or frozen N=124 statistics.
+No provider/model calls are required to reproduce the released analytic, deterministic-synthetic or frozen empirical results.
 
 ## Scope
 
-This release is a sanitized scientific reproducibility package. The broader private Pharos research-management repository is not part of the release and is not required to reproduce the manuscript claims.
+This release is a sanitized scientific reproducibility package containing the materials required to reproduce the manuscript claims.
