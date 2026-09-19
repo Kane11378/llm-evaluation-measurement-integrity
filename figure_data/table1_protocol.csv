@@ -1,4 +1,4 @@
-threat,measurement_failure,safeguard,omi_empirical_example,source
+threat,measurement_failure,safeguard,empirical_example,source
 Semantic confounding,Treatment changes target-relevant information,Task-relative semantic-information equivalence,LOCAL/CROSS required alias/value matched; companion swap preserves role multiset,"work/results/OMI-3078/IDENTIFICATION_FRAMEWORK.md §§3,5; EMPIRICAL_EVIDENCE_SYNTHESIS.md §10"
 Computational redundancy,Designated record is not needed to determine target,Constructive oracle-necessity audit,Earlier parent-value leakage removed before mature R4 instrument,work/results/OMI-3078/IDENTIFICATION_FRAMEWORK.md §4; EMPIRICAL_EVIDENCE_SYNTHESIS.md §2
 Scorer censoring,Completed/readable errors leave denominator,Freeze exact scorer; retain all completed/readable nonexact outputs as errors,Prospective scorer repair after scorer audit,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §3
