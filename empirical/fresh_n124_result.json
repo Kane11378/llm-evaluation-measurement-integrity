@@ -1,0 +1,21 @@
+{
+  "analysis": "fresh_prospective_depth_confirmation",
+  "independent_instances": 124,
+  "matched_pairs": 744,
+  "planned_and_completed_responses": 1488,
+  "integrity_failures": 0,
+  "raw_ledger_mismatches": 0,
+  "retry_replay_replacement_imputation": 0,
+  "primary": "L_i=(D_i_U-D_i_S)/2",
+  "estimate": 0.016129032258064516,
+  "sd": 0.2899781591927433,
+  "se": 0.026040807431490436,
+  "t": 0.6193752747681748,
+  "df": 123,
+  "p_two_sided": 0.5368147474398506,
+  "ci95": [
+    -0.03541714936289254,
+    0.06767521387902156
+  ],
+  "interpretation": "pre-specified positive depth contrast not confirmed; not equivalence; behavioral escalation stopped"
+}
