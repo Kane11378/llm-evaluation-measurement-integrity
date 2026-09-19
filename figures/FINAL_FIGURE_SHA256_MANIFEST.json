@@ -1,10 +1,10 @@
 {
   "schema": "OMI_PUBLIC_FIGURE_FREEZE_V1",
-  "source_commit": "e376696ffd5206d3d1d9a9b68735bb888ee9129d",
-  "workflow_run_id": "35427716524",
+  "source_commit": "b53ba2b4faf12b5449f9fcf213d725cc4c5f3ad2",
+  "workflow_run_id": "35436175056",
   "files": {
     "Figure1.pdf": {
-      "sha256": "a68577f8d75613c34183b3363bd2d5ee65fdbcdae1dbdd42a2abfad3f51e8753",
+      "sha256": "640e586f784d82d6b6b762e4d8749b243a748e39849660dd59ad3dad130b605a",
       "bytes": 34601
     },
     "Figure1.png": {
@@ -12,11 +12,11 @@
       "bytes": 380842
     },
     "Figure1.svg": {
-      "sha256": "bcd6f22927d8cbfb9441087018493fc76d68f807b7dc0ec2cf2e9bea5acdf916",
+      "sha256": "25834b62cd56fa3bd2a4ff4f928d527a5d9dbacfb7c35cfd7ba2adf87d0f4b9a",
       "bytes": 127711
     },
     "Figure2.pdf": {
-      "sha256": "41f131cbf1e70742deac7eea104730b01b317a0fd9f195274b47093cfa91007c",
+      "sha256": "e2806ddf98c2b588e2b90f0778af49b2ae890c32c9b9f4c5efd2616315595c36",
       "bytes": 74947
     },
     "Figure2.png": {
@@ -24,11 +24,11 @@
       "bytes": 648915
     },
     "Figure2.svg": {
-      "sha256": "0bcce19eab2277d41e81fb5b34680ab620a6ce43dc7115f83d63804415fb12ee",
+      "sha256": "2e45c18cb7cb6410cc40f762cb7a9e19917f8ff9e67ce3308b52fdb0e3b246a1",
       "bytes": 262102
     },
     "Figure3.pdf": {
-      "sha256": "d4635bad3c36b8e31558e725170ae6d5b819613adba0c132cf59a9fa0915593e",
+      "sha256": "79a60efc11fee44bf42a58e6072f35f10688f39c0445d2ec4befdb854d7b83ec",
       "bytes": 41573
     },
     "Figure3.png": {
@@ -36,11 +36,11 @@
       "bytes": 487988
     },
     "Figure3.svg": {
-      "sha256": "8a44be71a6bf6919a06cc796183ad4a35d5db42e7af0bf54cf92f20755530e66",
+      "sha256": "a8ebc5bcad7bb85a61dc0fbd6b7bbe5ee6640ab920e55ddcfd9d8d1c329e3ec1",
       "bytes": 174709
     },
     "Figure4.pdf": {
-      "sha256": "598807b3a8d0a39f1601795679c869b49eab32fa159052460dc59013db0157f4",
+      "sha256": "8a090b915493b246b1b750576f757f22981cb058cd4a556899334f1d518e3c44",
       "bytes": 27201
     },
     "Figure4.png": {
@@ -48,7 +48,7 @@
       "bytes": 154023
     },
     "Figure4.svg": {
-      "sha256": "baeaefa478f8c41de2a0bca497066a396069248a71363e6c0d5fb0d077cd8649",
+      "sha256": "1a705b5c4b1f49de7eafdd4cfa7ea9a2763081a5382a22bf23f445bc4973e1da",
       "bytes": 61592
     }
   }
