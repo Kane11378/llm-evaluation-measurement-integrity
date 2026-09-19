@@ -28,9 +28,9 @@ def save(fig, stem):
 def box(ax, x, y, w, h, text, fs=9, ls="-"):
     p = FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02",
                        facecolor="white", edgecolor="black",
-                       linewidth=1.0, linestyle=ls)
+                       linewidth=1.0, linestyle=ls, zorder=3)
     ax.add_patch(p)
-    ax.text(x+w/2, y+h/2, text, ha="center", va="center", fontsize=fs, wrap=True)
+    ax.text(x+w/2, y+h/2, text, ha="center", va="center", fontsize=fs, wrap=True, zorder=4)
 
 def figure1():
     fig = plt.figure(figsize=(12, 7.6))
@@ -75,7 +75,7 @@ def figure1():
     def arr(x0,y0,x1,y1,ls="-"):
         c.annotate("",xy=(x1,y1),xytext=(x0,y0),
                    arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=ls,
-                                   shrinkA=18,shrinkB=18))
+                                   shrinkA=18,shrinkB=18,zorder=1))
 
     # Draw connectors first so the opaque boxes mask line segments inside nodes.
     for x0,x1 in zip([.08,.28,.48,.68],[.28,.48,.68,.88]):
