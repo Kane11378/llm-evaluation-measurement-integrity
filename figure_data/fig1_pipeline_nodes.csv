@@ -1,0 +1,13 @@
+id,label,layer,kind
+unit,Independent instance i,design,unit
+c0,Matched condition z=0,design,condition
+c1,Matched condition z=1,design,condition
+worker,Stochastic worker response,behavior,response
+complete,Completion / readability,integrity,gate
+raw,Raw-response custody,measurement,artifact
+extract,Deterministic extraction,measurement,map
+score,Frozen deterministic score,measurement,map
+aggregate,Within-instance aggregation,inference,map
+infer,Independent-instance inference,inference,endpoint
+berr,Behavioral error: completed/readable nonexact,behavior,classification
+ifail,Integrity failure: planned observation absent,integrity,classification
