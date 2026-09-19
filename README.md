@@ -26,7 +26,7 @@ The public package separates four evidence classes:
 3. **Validation simulations** — deterministic finite-sample checks used only where stated.
 4. **Frozen empirical results** — preserved experimental records and derived statistics.
 
-Synthetic parameter values must not be interpreted as empirical estimates of empirical integrity hazards, ICCs or resource-demand distributions.
+Synthetic parameter values must not be interpreted as empirical estimates of integrity hazards, ICCs or resource-demand distributions.
 
 ## Repository structure
 
