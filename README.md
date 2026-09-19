@@ -70,4 +70,6 @@ ORCID: 0009-0006-7727-1214
 
 ## Citation
 
-The archival release will be versioned as `v1.0.0`; the Zenodo DOI will be added after release.
+Versioned archival release: **v1.0.0**  
+DOI: **10.5281/zenodo.22846957**  
+https://doi.org/10.5281/zenodo.22846957
