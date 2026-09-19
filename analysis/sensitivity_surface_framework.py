@@ -2,7 +2,7 @@
 """OMI-3079 analytic sensitivity-surface framework.
 
 Zero behavioral/model/provider calls. Synthetic deterministic math/simulation only.
-Frozen empirical rows are copied from accepted OMI adjudications and are not re-fit.
+Frozen empirical rows are copied from accepted frozen adjudications and are not re-fit.
 
 Run:
     python SENSITIVITY_SURFACE_FRAMEWORK.py
@@ -24,7 +24,7 @@ ROOT=Path(__file__).resolve().parent.parent
 DATA=ROOT/"reproduced"/"figure_data"
 RESULT_JSON=ROOT/"reproduced"/"SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json"
 
-# Frozen OMI-3078 synthetic models.
+# Frozen predecessor synthetic models.
 LATENT_INTERCEPT=1.25
 LATENT_DIFFICULTY_SLOPE=-.85
 RESOURCE_MEDIAN_BASE=350.0
