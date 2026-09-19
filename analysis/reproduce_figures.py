@@ -71,24 +71,27 @@ def figure1():
             ("Frozen\nscore",.68),
             ("Deterministic\nextraction",.88)]
     bw=.145; bh=.12; yt=.69; yb=.37
-    for label,x in top:
-        box(c,x-bw/2,yt-bh/2,bw,bh,label,fs=7.2)
-    for label,x in bottom:
-        box(c,x-bw/2,yb-bh/2,bw,bh,label,fs=7.2)
 
     def arr(x0,y0,x1,y1,ls="-"):
         c.annotate("",xy=(x1,y1),xytext=(x0,y0),
                    arrowprops=dict(arrowstyle="->",linewidth=.9,linestyle=ls,
                                    shrinkA=18,shrinkB=18))
+
+    # Draw connectors first so the opaque boxes mask line segments inside nodes.
     for x0,x1 in zip([.08,.28,.48,.68],[.28,.48,.68,.88]):
         arr(x0,yt,x1,yt)
     arr(.88,yt,.88,yb)
     for x0,x1 in zip([.88,.68,.48],[.68,.48,.28]):
         arr(x0,yb,x1,yb)
+    arr(.68,yt,.68,.20,"--")
+
+    for label,x in top:
+        box(c,x-bw/2,yt-bh/2,bw,bh,label,fs=7.2)
+    for label,x in bottom:
+        box(c,x-bw/2,yb-bh/2,bw,bh,label,fs=7.2)
 
     # Integrity failure is a side branch from the completion gate.
     box(c,.59,.08,.18,.12,"Integrity failure:\nplanned observation absent",fs=6.7,ls="--")
-    arr(.68,yt,.68,.20,"--")
     # Completed/readable nonexact behavior is retained by the score rather than dropped.
     c.text(.68,.24,"nonexact → score 0\n(retained in denominator)",
            ha="center",va="center",fontsize=6.6)
