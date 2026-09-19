@@ -30,20 +30,10 @@ jobs:
       - name: Recompute deterministic sensitivity surfaces
         run: python analysis/sensitivity_surface_framework.py
 
-      - name: Verify frozen figure-data determinism
-        run: |
-          git diff --exit-code -- figure_data
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          frozen=json.loads(Path("analysis/SENSITIVITY_SURFACE_RESULTS.json").read_text())
-          reproduced=json.loads(Path("analysis/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json").read_text())
-          if frozen != reproduced:
-              raise SystemExit("Sensitivity result JSON mismatch")
-          print("Sensitivity result JSON exact match")
-          PY
+      - name: Validate regenerated surfaces against frozen data
+        run: python analysis/validate_reproduction.py
 
-      - name: Render figures
+      - name: Render figures from frozen public data
         run: python analysis/reproduce_figures.py
 
       - name: Verify expected figure formats
@@ -54,7 +44,7 @@ jobs:
             test -s "figures/Figure${n}.png"
           done
 
-      - name: Upload rendered figures and recomputation receipt
+      - name: Upload rendered figures and reproducibility receipts
         uses: actions/upload-artifact@v4
         with:
           name: reproducibility-rendered-figures
@@ -62,5 +52,5 @@ jobs:
             figures/Figure*.pdf
             figures/Figure*.png
             n124_recompute.txt
-            analysis/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
+            reproduced/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
           if-no-files-found: error
