@@ -9,7 +9,7 @@
     "behavioral_provider_calls": 0,
     "scientific_spend": 0,
     "computation": {
-      "analytic_expectations": "deterministic numerical integration under frozen D~N(0,1); reference landmarks cross-checked by 100-node Gauss-Hermite quadrature",
+      "analytic_expectations": "deterministic numerical integration under frozen D~N(0,1); reference landmarks cross-checked by Gauss-Hermite quadrature",
       "validation_simulation": "deterministic Gaussian exchangeable-cluster Monte Carlo, 20000 reps per selected point"
     },
     "frozen_synthetic_model": {
@@ -18,25 +18,25 @@
       "resource_demand": "log Q=log(350)+0.5*difficulty+delta*z+Normal(0,0.7^2)"
     },
     "marginal_accuracy_landmarks": {
-      "beta_0": 0.7482949549720432,
-      "beta_0.25": 0.7878836726874054,
-      "beta_0.30": 0.7952747143846032
+      "beta_0": 0.7482949549720435,
+      "beta_0.25": 0.7878836726874057,
+      "beta_0.30": 0.7952747143846035
     },
     "surfaces": {
       "scorer_censoring": {
-        "latent_null_accuracy": 0.7482949549720432,
+        "latent_null_accuracy": 0.7482949549720435,
         "control_reference": {
-          "correct_retention": 1,
+          "correct_retention": 1.0,
           "incorrect_retention": 0.9
         },
         "exact_null_effect_numerator": "p(1-p)(a1*b0-a0*b1)",
         "positive_condition": "a1*b0 > a0*b1",
         "negative_condition": "a1*b0 < a0*b1",
         "zero_boundary": "a1*b0 = a0*b1",
-        "analytic_exemplar_at_treatment_1_0_60": 0.06445313611989922
+        "analytic_exemplar_at_treatment_1_0_60": 0.06445313611989911
       },
       "treatment_correlated_missingness": {
-        "latent_null_accuracy": 0.7482949549720432,
+        "latent_null_accuracy": 0.7482949549720435,
         "control_observation": "logit^-1(3.5), constant in difficulty",
         "treatment_observation": "logit^-1(alpha + gamma*difficulty)",
         "identity": "mu1_CC-mu = Cov[p(D),q1(D)]/E[q1(D)]",
@@ -45,31 +45,31 @@
           "alpha": 2.2,
           "gamma_negative": {
             "gamma": -1.3,
-            "missing_fraction": 0.15348093386703976,
-            "complete_case_accuracy": 0.7741625021449133,
-            "complete_case_effect_vs_latent": 0.025867547172870098
+            "missing_fraction": 0.15348093386703932,
+            "complete_case_accuracy": 0.7741625021449131,
+            "complete_case_effect_vs_latent": 0.025867547172869654
           },
           "gamma_positive": {
             "gamma": 1.3,
-            "missing_fraction": 0.15348093386703976,
-            "complete_case_accuracy": 0.727828462332176,
-            "complete_case_effect_vs_latent": -0.020466492639867218
+            "missing_fraction": 0.15348093386703954,
+            "complete_case_accuracy": 0.7278284623321767,
+            "complete_case_effect_vs_latent": -0.020466492639866773
           }
         },
         "different_missing_zero_bias_counterexample": {
           "alpha": 2.2,
-          "gamma": 0,
-          "missing_fraction": 0.09975048911968509,
-          "complete_case_accuracy": 0.7482949549720432,
-          "complete_case_effect_vs_latent": 0
+          "gamma": 0.0,
+          "missing_fraction": 0.0997504891196852,
+          "complete_case_accuracy": 0.7482949549720433,
+          "complete_case_effect_vs_latent": -1.1102230246251565e-16
         }
       },
       "retry_replacement": {
         "latent_accuracy": {
-          "control": 0.7482949549720432,
-          "treatment": 0.7952747143846032
+          "control": 0.7482949549720435,
+          "treatment": 0.7952747143846035
         },
-        "latent_effect": 0.04697975941255994,
+        "latent_effect": 0.04697975941256005,
         "control_acceptance": {
           "correct": 0.98,
           "incorrect": 0.9,
@@ -77,16 +77,16 @@
         },
         "exact_odds_identity": "odds(p_accepted,z)=odds(p_z)*(c_z1/c_z0)",
         "positive_latent_effect_reversal_condition": "(c11/c10)/(c01/c00) < odds(p0)/odds(p1)",
-        "zero_effect_treatment_odds_multiplier": 0.8333333725671752,
-        "analytic_exemplar_0_80_0_99": -0.005593372062648205,
+        "zero_effect_treatment_odds_multiplier": 0.8333333725671745,
+        "analytic_exemplar_0_80_0_99": -0.005593372062647983,
         "estimand_boundary": "Acceptance weighting applies to replacement/resampled outcome-relevant attempt state. A frozen same-unit retrying system is a different target system/estimand."
       },
       "stochastic_finalizer": {
         "worker_accuracy": {
-          "control": 0.7482949549720432,
-          "treatment": 0.7952747143846032
+          "control": 0.7482949549720435,
+          "treatment": 0.7952747143846035
         },
-        "worker_effect": 0.04697975941255994,
+        "worker_effect": 0.04697975941256005,
         "control_channel": {
           "sensitivity": 0.96,
           "false_positive": 0.02
@@ -95,7 +95,7 @@
         "treatment_invariant_attenuation_condition": "0 <= s-f <= 1; strict attenuation for 0 < s-f < 1, erasure at s=f, reversal if s-f<0",
         "symmetric_flip_identity": "s=1-epsilon,f=epsilon => Delta_m=(1-2epsilon)Delta_p",
         "treatment_dependent_zero_boundary": "s1*p1 + f1*(1-p1) = s0*p0 + f0*(1-p0)",
-        "zero_boundary_s1_at_f1_0_02": 0.9044707934892926,
+        "zero_boundary_s1_at_f1_0_02": 0.9044707934892925,
         "analytic_exemplar_s1_0_80_f1_0_02": -0.08308298045372997
       },
       "resource_truncation": {
@@ -109,24 +109,25 @@
           -0.6,
           0.6
         ],
-        "explicit_scope": "synthetic only; not calibrated to the empirical resource-demand distribution",
+        "explicit_scope": "synthetic only; not calibrated to the empirical case token/resource demand",
         "analytic_reference_points": {
           "2048_delta_0.30": {
-            "control_truncation_fraction": 0.02000088835816871,
-            "treatment_truncation_fraction": 0.044098364152984626,
-            "truncation_asymmetry": 0.024097475794815915,
-            "complete_case_effect": 0.043397638999567056,
-            "complete_case_distortion": 0.003808921284204847,
-            "truncation_as_error_effect": 0.023335741249124853,
-            "truncation_as_error_distortion": -0.016252976466237357
+            "control_truncation_fraction": 0.020000901793177372,
+            "treatment_truncation_fraction": 0.04409836551776958,
+            "truncation_asymmetry": 0.024097463724592205,
+            "complete_case_effect": 0.04339764136611546,
+            "complete_case_distortion": 0.0038089236507532487,
+            "truncation_as_error_effect": 0.023335752624218054,
+            "truncation_as_error_distortion": -0.016252965091144156
           },
           "8192_delta_0.30": {
-            "control_truncation_fraction": 0.0001235412902829136,
-            "treatment_truncation_fraction": 0.0004557268790277291,
-            "complete_case_effect": 0.039698259476641407,
-            "complete_case_distortion": 0.00010954176127919713,
-            "truncation_as_error_effect": 0.03943157881412229,
-            "truncation_as_error_distortion": -0.00015713890123991714
+            "control_truncation_fraction": 0.00012355224003868237,
+            "treatment_truncation_fraction": 0.00045574703274353645,
+            "truncation_asymmetry": 0.0003321947927048541,
+            "complete_case_effect": 0.03969825948193284,
+            "complete_case_distortion": 0.00010954176657063108,
+            "truncation_as_error_effect": 0.03943157113089946,
+            "truncation_as_error_distortion": -0.00015714658446275287
           }
         }
       },
@@ -144,12 +145,79 @@
             0.9
           ]
         },
+        "validation": [
+          {
+            "K": 1,
+            "rho": 0,
+            "N_instances": 124,
+            "replications": 20000,
+            "design_effect": 1,
+            "normal_approx_actual_alpha": 0.050000000000000044,
+            "empirical_naive_call_level_rejection": 0.0501,
+            "empirical_instance_level_rejection": 0.0501,
+            "mean_naive_to_instance_se_ratio": 1.0,
+            "theoretical_naive_to_correct_se_ratio": 1.0,
+            "seed": 13179
+          },
+          {
+            "K": 2,
+            "rho": 0.1,
+            "N_instances": 124,
+            "replications": 20000,
+            "design_effect": 1.1,
+            "normal_approx_actual_alpha": 0.06165727904125351,
+            "empirical_naive_call_level_rejection": 0.06105,
+            "empirical_instance_level_rejection": 0.0495,
+            "mean_naive_to_instance_se_ratio": 0.9559278907932814,
+            "theoretical_naive_to_correct_se_ratio": 0.9534625892455922,
+            "seed": 13379
+          },
+          {
+            "K": 6,
+            "rho": 0.4,
+            "N_instances": 124,
+            "replications": 20000,
+            "design_effect": 3.0,
+            "normal_approx_actual_alpha": 0.25780864053606933,
+            "empirical_naive_call_level_rejection": 0.2608,
+            "empirical_instance_level_rejection": 0.05185,
+            "mean_naive_to_instance_se_ratio": 0.5783926307923887,
+            "theoretical_naive_to_correct_se_ratio": 0.5773502691896258,
+            "seed": 14079
+          },
+          {
+            "K": 10,
+            "rho": 0.6,
+            "N_instances": 124,
+            "replications": 20000,
+            "design_effect": 6.3999999999999995,
+            "normal_approx_actual_alpha": 0.43849106958146633,
+            "empirical_naive_call_level_rejection": 0.44265,
+            "empirical_instance_level_rejection": 0.05,
+            "mean_naive_to_instance_se_ratio": 0.39543591151915075,
+            "theoretical_naive_to_correct_se_ratio": 0.3952847075210474,
+            "seed": 14679
+          },
+          {
+            "K": 20,
+            "rho": 0.8,
+            "N_instances": 124,
+            "replications": 20000,
+            "design_effect": 16.200000000000003,
+            "normal_approx_actual_alpha": 0.6262888271505527,
+            "empirical_naive_call_level_rejection": 0.63055,
+            "empirical_instance_level_rejection": 0.0515,
+            "mean_naive_to_instance_se_ratio": 0.2480541705143038,
+            "theoretical_naive_to_correct_se_ratio": 0.2484519974999766,
+            "seed": 15879
+          }
+        ],
         "omi_scale_note": "K=6 is only a design-scale marker; ICC=.40 is synthetic and not estimated from the empirical study."
       },
       "fixed_bank_integrity": {
         "exact_identity": "P(full)=(1-h)^B",
         "hazard_range": [
-          0.000001,
+          1e-06,
           0.01
         ],
         "bank_size_range": [
@@ -158,7 +226,7 @@
         ],
         "thresholds": {
           "1488": {
-            "h_for_95pct_full": 0.00003447070586315437,
+            "h_for_95pct_full": 3.447070586315437e-05,
             "h_for_50pct_full": 0.00046571623862901035
           }
         },
@@ -173,7 +241,7 @@
         "partial_random_common_loss": "if r0=r1=r and failure maps to zero, Delta_derived=r*Delta_raw",
         "treatment_correlated_random_loss_under_true_null": "if p0=p1=p, Delta_derived=p*(r1-r0)",
         "positive_raw_effect_sign_reversal_boundary": "r1/r0=p0/p1 for r0>0; reversal below",
-        "boundary_ratio_p0_over_p1": 0.9409263760524391,
+        "boundary_ratio_p0_over_p1": 0.940926376052439,
         "outcome_dependent_row_loss_true_null": "complete-case sign follows a1-b1 when control extraction is faithful"
       }
     },

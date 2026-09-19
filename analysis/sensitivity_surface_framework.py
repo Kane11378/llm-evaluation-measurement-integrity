@@ -169,7 +169,7 @@ def resource():
             truncation_as_error_effect=err,truncation_as_error_distortion=err-raw)
     summary=dict(model="log Q=log(350)+0.5*difficulty+delta*z+Normal(0,0.7^2); latent logit shift beta=0.25",
         latent_effect=raw,cap_range=[512,16384],shift_range=[-.6,.6],
-        explicit_scope="synthetic only; not calibrated to OMI token/resource demand",
+        explicit_scope="synthetic only; not calibrated to the empirical case token/resource demand",
         analytic_reference_points={"2048_delta_0.30":ref(2048,.3),"8192_delta_0.30":ref(8192,.3)})
     return rows,summary
 
@@ -205,7 +205,7 @@ def pseudorep():
     return rows,dict(design_effect="DE=1+(K-1)rho",naive_to_correct_se_ratio="1/sqrt(DE)",
         nominal_alpha_approximation="alpha_actual≈2[1-Phi(z_(1-alpha/2)/sqrt(DE))]",
         grid=dict(K=[1,20],rho=[0,.9]),validation=vals,
-        omi_scale_note="K=6 is only a design-scale marker; ICC=.40 is synthetic and not estimated from OMI.")
+        omi_scale_note="K=6 is only a design-scale marker; ICC=.40 is synthetic and not estimated from the empirical study.")
 
 def bank():
     rows=[]
@@ -216,7 +216,7 @@ def bank():
                 full_bank_probability=pf,stop_probability=1-pf,omi_B1488_scale_marker=bool(B==1488)))
     summary=dict(exact_identity="P(full)=(1-h)^B",hazard_range=[1e-6,.01],bank_size_range=[100,5000],
         thresholds={"1488":{"h_for_95pct_full":1-.95**(1/1488),"h_for_50pct_full":1-.50**(1/1488)}},
-        omi_note="B=1488 is a scale marker only. No OMI per-call hazard is inferred or estimated.")
+        omi_note="B=1488 is a scale marker only. No empirical per-call hazard is inferred or estimated.")
     return rows,summary
 
 def extraction():
@@ -325,11 +325,11 @@ def main():
       surfaces=dict(scorer_censoring=ss,treatment_correlated_missingness=ms,retry_replacement=rs,
                     stochastic_finalizer=fs,resource_truncation=qs,pseudo_replication=ps,
                     fixed_bank_integrity=bs,derived_ledger_extraction=es),
-      parameter_range_principle="Ranges fixed from probability-domain support or symmetric/model-scale extensions around the frozen OMI-3078 examples before inspecting surfaces; none selected to maximize visual effect.",
+      parameter_range_principle="Ranges fixed from probability-domain support or symmetric/model-scale extensions around the frozen predecessor examples before inspecting surfaces; none selected to maximize visual effect.",
       scope=["Exact algebraic boundaries are exact only under stated measurement models.",
              "Numerical surfaces are deterministic consequences of the frozen synthetic latent/demand models.",
              "Monte Carlo is used only to validate pseudo-replication alpha behavior at representative points.",
-             "No synthetic magnitude is calibrated to or asserted as the historical OMI bias.",
+             "No synthetic magnitude is calibrated to or asserted as the historical measurement bias in the empirical case.",
              "B=1488 and K=6 are scale markers only where stated."])
     RESULT_JSON.write_text(json.dumps(result,indent=2,ensure_ascii=False)+"\n",encoding="utf-8")
     package=dict(schema="OMI-3079 figure data package",version="1.0",generated_by="SENSITIVITY_SURFACE_FRAMEWORK.py",

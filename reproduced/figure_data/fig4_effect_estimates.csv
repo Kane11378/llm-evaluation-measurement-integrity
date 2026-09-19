@@ -1,0 +1,10 @@
+panel,estimate,classification,N_independent_instances,effect,ci_low,ci_high,p_raw,p_adjusted,ci_available,interpretation,source
+A,Corrected overall confirmatory LOCAL-CROSS,confirmatory,28,0.0416667,-0.03821,0.12155,0.29398,,yes,non-detection; not equivalence,projects/omi/research/OMI_3067_CORRECTED_PRIMARY_ADJUDICATION_20260918.md
+B,Exploratory stage S,secondary/exploratory after multiplicity,28,-0.07143,,,0.38073,0.76146,no,point estimate only in this frozen figure package,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §6
+B,Exploratory stage T,secondary/exploratory after multiplicity,28,0.05357,,,0.44861,0.76146,no,point estimate only in this frozen figure package,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §6
+B,Exploratory stage U,secondary/exploratory after multiplicity,28,0.14286,,,0.01793,0.0538,no,Holm-adjusted p=.05380; not confirmatory,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §6
+B,Post-hoc linear depth slope (D_U-D_S)/2,post-hoc exploratory,28,0.10714,,,0.037,,no,approximate unadjusted p; hypothesis-generating only,work/results/OMI-3078/EMPIRICAL_EVIDENCE_SYNTHESIS.md §6
+C,Fresh N=124 depth primary L=(D_U-D_S)/2,prospective confirmatory,124,0.016129,-0.0354171,0.0676752,0.5368147,,yes,pre-specified positive depth contrast not confirmed; not equivalence,projects/omi/research/OMI_3077_FRESH_DEPTH_CONFIRMATION_NULL_ADJUDICATION_20260919.md
+D,Fresh stage S secondary,formal secondary after closed primary gate,124,0.0080645,,,0.821897,1,no,no stage-specific confirmatory claim,projects/omi/research/OMI_3077_FRESH_DEPTH_CONFIRMATION_NULL_ADJUDICATION_20260919.md
+D,Fresh stage T secondary,formal secondary after closed primary gate,124,0,,,1,1,no,no stage-specific confirmatory claim,projects/omi/research/OMI_3077_FRESH_DEPTH_CONFIRMATION_NULL_ADJUDICATION_20260919.md
+D,Fresh stage U secondary,formal secondary after closed primary gate,124,0.0403226,,,0.226692,0.680075,no,no stage-specific confirmatory claim,projects/omi/research/OMI_3077_FRESH_DEPTH_CONFIRMATION_NULL_ADJUDICATION_20260919.md

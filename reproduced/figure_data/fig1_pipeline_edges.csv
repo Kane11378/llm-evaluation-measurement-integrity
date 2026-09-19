@@ -1,0 +1,14 @@
+source,target,label,path_type
+unit,c0,matched assignment,intended
+unit,c1,matched assignment,intended
+c0,worker,frozen operating point,intended
+c1,worker,frozen operating point,intended
+worker,complete,planned observation exists?,intended
+complete,raw,yes,intended
+complete,ifail,no,failure
+raw,extract,custody before parse,intended
+extract,score,faithful derived map,intended
+score,aggregate,node score,intended
+aggregate,infer,instance endpoint,intended
+worker,berr,completed/readable but nonexact,classification
+berr,score,score 0; retain denominator,intended

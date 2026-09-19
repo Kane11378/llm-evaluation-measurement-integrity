@@ -158,7 +158,7 @@ def figure2():
                     "treatment_log_demand_shift","log2_output_cap",
                     "complete_case_distortion","e  Resource truncation",
                     "log2(output cap)","treatment log-demand shift"))
-    axs[1,1].text(.02,.02,"Synthetic demand model; not calibrated to OMI",
+    axs[1,1].text(.02,.02,"Synthetic demand model; not calibrated to the empirical case",
                   transform=axs[1,1].transAxes,fontsize=6,
                   bbox=dict(facecolor="white",alpha=.8,edgecolor="none"))
     ims.append(heat(axs[1,2],"fig2_pseudorep_surface.csv",
@@ -190,7 +190,7 @@ def figure2():
     for ax,im in zip(axs.flat,ims):
         fig.colorbar(im,ax=ax,shrink=.72,pad=.02).ax.tick_params(labelsize=5.5)
     fig.suptitle("Evaluation infrastructure can alter an apparent treatment effect\n"
-                 "Analytic/deterministic synthetic surfaces — not OMI empirical estimates",
+                 "Analytic/deterministic synthetic surfaces — not empirical estimates of the case study",
                  fontsize=13,fontweight="bold")
     fig.tight_layout(rect=(0,0,1,.95))
     save(fig,"Figure2")
@@ -213,7 +213,7 @@ def figure3():
         for x,val,w in zip(cols,vals,widths):
             ax.text(x,y,"\n".join(textwrap.wrap(str(val),w)),transform=ax.transAxes,
                     fontsize=8.2,va="top",fontweight="bold" if x==cols[0] else "normal")
-    ax.set_title("Measurement failures and prospective safeguards in OMI",
+    ax.set_title("Measurement failures and prospective safeguards in the empirical case",
                  loc="left",fontweight="bold",fontsize=13)
     ax.text(.01,.015,
             "Historical states were preserved; the sequence represents measurement hardening, not accumulation of positive evidence.",
@@ -238,7 +238,7 @@ def figure4():
     ax.set_yticks(y); ax.set_yticklabels(labels,fontsize=8)
     ax.set_xlim(-.10,.18)
     ax.set_xlabel("LOCAL − CROSS effect / frozen depth contrast")
-    ax.set_title("Confirmatory and exploratory provenance contrasts in OMI",
+    ax.set_title("Confirmatory and exploratory provenance contrasts",
                  loc="left",fontweight="bold",pad=12)
     ax.grid(axis="x",linewidth=.4,alpha=.4)
     fig.tight_layout()

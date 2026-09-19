@@ -1,10 +1,10 @@
 {
-  "schema": "OMI_PUBLIC_FIGURE_FREEZE_V1",
-  "source_commit": "cac8193fcb269eca1592d69b2a830f42e22af0a4",
-  "workflow_run_id": "35445759490",
+  "schema": "PUBLIC_FIGURE_FREEZE_V1",
+  "source_commit": null,
+  "workflow_run_id": null,
   "files": {
     "Figure1.pdf": {
-      "sha256": "ca0f486276c95c4d64232faa6062e489f56634e0beff7888b6f11df5864a9882",
+      "sha256": "acb6686b2f92d1aa8dc5984f79225362c7535ce3c06ac41b61a07aef841175b3",
       "bytes": 34511
     },
     "Figure1.png": {
@@ -12,45 +12,45 @@
       "bytes": 384898
     },
     "Figure1.svg": {
-      "sha256": "6d157465c71580efdbaa9377c16b1113b451448b8b344154af419742a34d7406",
+      "sha256": "c86fcbbd07f69fd9e0d6ebdd8258556ef9f67f6764afe38baf7b4550164dd3f9",
       "bytes": 127313
     },
     "Figure2.pdf": {
-      "sha256": "41f131cbf1e70742deac7eea104730b01b317a0fd9f195274b47093cfa91007c",
-      "bytes": 74947
+      "sha256": "2b80c40d8b1c24d610514380f95242b0b43b3011e45d1e7d23d61ebe9d0a7d1a",
+      "bytes": 74077
     },
     "Figure2.png": {
-      "sha256": "dc579fc8287d1f325d98aa7667ffab5cc49fe03da7573c551f444fe4f61b086c",
-      "bytes": 648915
+      "sha256": "94b8c93fa166393906e2f845ca12d2dfebaeeb566d7f702e537d5138fee7c6ad",
+      "bytes": 648958
     },
     "Figure2.svg": {
-      "sha256": "0bcce19eab2277d41e81fb5b34680ab620a6ce43dc7115f83d63804415fb12ee",
-      "bytes": 262102
+      "sha256": "4d6b92b1db9800f6b12bc73d9b0583e14afab65ce712a05c03b79206aeaf81a1",
+      "bytes": 263335
     },
     "Figure3.pdf": {
-      "sha256": "d4635bad3c36b8e31558e725170ae6d5b819613adba0c132cf59a9fa0915593e",
-      "bytes": 41573
+      "sha256": "42b088bff38dcf384be7fd91e00a9638951d17ee41d41f80dd700b67b6cf4e9a",
+      "bytes": 41046
     },
     "Figure3.png": {
-      "sha256": "2725d9f569d010676365d46471822df58c6c957f6211ff0df62c3e152617fd55",
-      "bytes": 487988
+      "sha256": "d08440ff7aa7c59e6c70e603a750fa686095b80a9bd1e36905656e3d6c49571d",
+      "bytes": 485665
     },
     "Figure3.svg": {
-      "sha256": "8a44be71a6bf6919a06cc796183ad4a35d5db42e7af0bf54cf92f20755530e66",
-      "bytes": 174709
+      "sha256": "944113eab011b7593533110a8a4ff2b816fe093bd82cc4cc585c4b09198accca",
+      "bytes": 175393
     },
     "Figure4.pdf": {
-      "sha256": "598807b3a8d0a39f1601795679c869b49eab32fa159052460dc59013db0157f4",
-      "bytes": 27201
+      "sha256": "b64e46f3ad5f52908d12de32a03e045aae5facdaac963940c30704d147d4d8d3",
+      "bytes": 26286
     },
     "Figure4.png": {
-      "sha256": "4dce8b78f0c7c3e0479c7ad812b747bef5d9e0a2c621a387f9ecdf2b69459f95",
-      "bytes": 154023
+      "sha256": "af7561540362f98944a3e4e0ff8b3515808795f619528892f3c0adafc62cde70",
+      "bytes": 151426
     },
     "Figure4.svg": {
-      "sha256": "baeaefa478f8c41de2a0bca497066a396069248a71363e6c0d5fb0d077cd8649",
-      "bytes": 61592
+      "sha256": "0f6bcb3854038854a0effe1f560f443f9226db9d70f788d2293d5afe3eaf9d59",
+      "bytes": 60000
     }
   },
-  "note": "Release-candidate figure freeze after Figure 1 layout-only repair; Figures 2–4 retain their previously frozen bytes."
+  "note": "Publication-facing figure freeze after removal of internal project branding; scientific content unchanged."
 }

@@ -41,6 +41,6 @@ Do not infer that:
 - LOCAL and CROSS are equivalent;
 - the positive depth effect is confirmed;
 - computational necessity proves internal neural retrieval;
-- the synthetic sensitivity parameters estimate historical OMI bias;
+- the synthetic sensitivity parameters estimate historical measurement bias in the empirical case;
 - retry is universally invalid;
 - fixed-bank stopping makes missingness ignorable.

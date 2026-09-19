@@ -10,7 +10,7 @@ This repository contains the released scientific materials needed to audit and r
 
 The manuscript does **not** report a confirmed general provenance bias.
 
-**OMI** is the short case label used in the manuscript for the audited contextual-provenance empirical study. Its empirical record contains:
+The audited contextual-provenance empirical study contains:
 - a corrected N=28 confirmatory non-detection;
 - an exploratory depth pattern;
 - a wholly fresh prospective N=124 test that did not confirm the pre-specified positive depth contrast.
@@ -22,11 +22,11 @@ The general contribution is a measurement and identification framework showing, 
 The public package separates four evidence classes:
 
 1. **Exact analytic results** — algebraic consequences of stated measurement models.
-2. **Deterministic synthetic surfaces** — parameter-sensitivity geometry; not estimates of historical OMI bias.
+2. **Deterministic synthetic surfaces** — parameter-sensitivity geometry; not estimates of historical measurement bias in the empirical case.
 3. **Validation simulations** — deterministic finite-sample checks used only where stated.
-4. **Frozen empirical OMI results** — preserved experimental records and derived statistics.
+4. **Frozen empirical results** — preserved experimental records and derived statistics.
 
-Synthetic parameter values must not be interpreted as empirical estimates of OMI integrity hazards, ICCs or resource-demand distributions.
+Synthetic parameter values must not be interpreted as empirical estimates of empirical integrity hazards, ICCs or resource-demand distributions.
 
 ## Repository structure
 
