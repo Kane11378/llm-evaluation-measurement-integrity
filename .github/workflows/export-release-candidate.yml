@@ -1,0 +1,33 @@
+name: export-release-candidate
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - ".github/workflows/export-release-candidate.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Stage repository snapshot
+        run: |
+          mkdir export
+          rsync -a --exclude='.git' --exclude='.github/workflows/export-release-candidate.yml' ./ export/
+
+      - name: Upload snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: public-release-candidate-snapshot
+          path: export/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 7
