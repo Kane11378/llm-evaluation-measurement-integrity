@@ -1,7 +1,7 @@
 {
   "title": "LLM Evaluation Measurement Integrity: Reproducibility Package",
   "upload_type": "software",
-  "description": "Deterministic code, frozen figure data, empirical derived artifacts, manifests and reproducibility documentation accompanying the manuscript “Evaluation infrastructure can distort behavioral effects in language-model experiments”. The package separates exact analytic results, deterministic synthetic sensitivity surfaces, validation simulations and frozen empirical OMI results.",
+  "description": "Deterministic code, frozen figure data, empirical derived artifacts, manifests and reproducibility documentation accompanying the manuscript “Evaluation infrastructure can distort behavioral effects in language-model experiments”. OMI is the manuscript's short label for the audited contextual-provenance empirical case. The package separates exact analytic results, deterministic synthetic sensitivity surfaces, validation simulations and frozen empirical results.",
   "creators": [
     {
       "name": "Wang, Kang",
