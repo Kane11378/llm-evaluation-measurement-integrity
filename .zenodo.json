@@ -18,5 +18,8 @@
     "causal inference",
     "benchmarking"
   ],
-  "access_right": "open"
+  "access_right": "open",
+  "version": "1.0.0",
+  "license": "mit",
+  "language": "eng"
 }
