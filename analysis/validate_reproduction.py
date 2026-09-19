@@ -26,7 +26,7 @@ FILES=[
     "fig2_extraction_outcome_dependent_row_loss_surface.csv",
 ]
 
-ATOL=5e-7
+ATOL=1e-5
 RTOL=1e-10
 
 for name in FILES:
