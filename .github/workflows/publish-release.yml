@@ -4,7 +4,7 @@ on:
   push:
     branches: [ main ]
     paths:
-      - ".release/v1.0.0-nmi-submission"
+      - ".release/v1.0.0"
 
 permissions:
   contents: write
@@ -25,6 +25,7 @@ jobs:
           test -s .zenodo.json
           test -s LICENSE
           test -s figures/FINAL_FIGURE_SHA256_MANIFEST.json
+          test -s empirical/corrected_n28_instance_effects.csv
           test -s empirical/fresh_n124_instance_effects.csv
           test -s RELEASE_NOTES.md
           python -m json.tool .zenodo.json >/dev/null
@@ -34,8 +35,8 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          if gh release view v1.0.0-nmi-submission >/dev/null 2>&1; then
-            echo "Release v1.0.0-nmi-submission already exists."
+          if gh release view v1.0.0 >/dev/null 2>&1; then
+            echo "Release v1.0.0 already exists."
             exit 1
           fi
 
@@ -43,7 +44,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create v1.0.0-nmi-submission \
+          gh release create v1.0.0 \
             --target "${GITHUB_SHA}" \
-            --title "v1.0.0-nmi-submission" \
+            --title "v1.0.0" \
             --notes-file RELEASE_NOTES.md
