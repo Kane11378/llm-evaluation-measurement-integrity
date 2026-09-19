@@ -1,7 +1,7 @@
 {
   "schema": "OMI_PUBLIC_FIGURE_FREEZE_V1",
-  "source_commit": null,
-  "workflow_run_id": null,
+  "source_commit": "cac8193fcb269eca1592d69b2a830f42e22af0a4",
+  "workflow_run_id": "35445759490",
   "files": {
     "Figure1.pdf": {
       "sha256": "ca0f486276c95c4d64232faa6062e489f56634e0beff7888b6f11df5864a9882",
@@ -52,5 +52,5 @@
       "bytes": 61592
     }
   },
-  "note": "Release-candidate figure freeze after Figure 1 layout-only repair; Figures 2\u20134 retain their previously frozen bytes."
+  "note": "Release-candidate figure freeze after Figure 1 layout-only repair; Figures 2–4 retain their previously frozen bytes."
 }
