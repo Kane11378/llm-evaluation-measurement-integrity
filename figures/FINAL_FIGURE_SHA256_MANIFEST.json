@@ -1,7 +1,7 @@
 {
   "schema": "PUBLIC_FIGURE_FREEZE_V1",
-  "source_commit": null,
-  "workflow_run_id": null,
+  "source_commit": "083cc9fa8452971c62a36d5aadfc09c7fcd83377",
+  "workflow_run_id": "35448531510",
   "files": {
     "Figure1.pdf": {
       "sha256": "acb6686b2f92d1aa8dc5984f79225362c7535ce3c06ac41b61a07aef841175b3",
