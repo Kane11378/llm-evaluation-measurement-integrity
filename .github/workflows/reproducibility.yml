@@ -1,0 +1,66 @@
+name: reproducibility
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Recompute fresh N=124 confirmation
+        run: python analysis/recompute_n124.py | tee n124_recompute.txt
+
+      - name: Recompute deterministic sensitivity surfaces
+        run: python analysis/sensitivity_surface_framework.py
+
+      - name: Verify frozen figure-data determinism
+        run: |
+          git diff --exit-code -- figure_data
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          frozen=json.loads(Path("analysis/SENSITIVITY_SURFACE_RESULTS.json").read_text())
+          reproduced=json.loads(Path("analysis/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json").read_text())
+          if frozen != reproduced:
+              raise SystemExit("Sensitivity result JSON mismatch")
+          print("Sensitivity result JSON exact match")
+          PY
+
+      - name: Render figures
+        run: python analysis/reproduce_figures.py
+
+      - name: Verify expected figure formats
+        run: |
+          for n in 1 2 3 4; do
+            test -s "figures/Figure${n}.svg"
+            test -s "figures/Figure${n}.pdf"
+            test -s "figures/Figure${n}.png"
+          done
+
+      - name: Upload rendered figures and recomputation receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: reproducibility-rendered-figures
+          path: |
+            figures/Figure*.pdf
+            figures/Figure*.png
+            n124_recompute.txt
+            analysis/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
+          if-no-files-found: error
