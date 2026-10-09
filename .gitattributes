@@ -1,0 +1,6 @@
+# Preserve the exact released bytes used by scientific integrity checks.
+empirical/corrected_n28_instance_effects.csv text eol=lf
+figures/*.svg text eol=lf
+figures/FINAL_FIGURE_SHA256_MANIFEST.json text eol=lf
+*.pdf binary
+*.png binary

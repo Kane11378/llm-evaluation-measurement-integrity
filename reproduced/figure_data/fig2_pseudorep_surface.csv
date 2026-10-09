@@ -1,4 +1,4 @@
-calls_per_instance_K,icc_rho,design_effect,naive_to_correct_se_ratio,nominal_alpha,normal_approx_actual_alpha_if_calls_treated_independent,alpha_inflation_ratio,omi_K6_scale_marker
+calls_per_instance_K,icc_rho,design_effect,naive_to_correct_se_ratio,nominal_alpha,normal_approx_actual_alpha_if_calls_treated_independent,alpha_inflation_ratio,K6_scale_marker
 1,0.0,1.0,1.0,0.05,0.050000000000000044,1.0000000000000009,False
 1,0.05,1.0,1.0,0.05,0.050000000000000044,1.0000000000000009,False
 1,0.1,1.0,1.0,0.05,0.050000000000000044,1.0000000000000009,False

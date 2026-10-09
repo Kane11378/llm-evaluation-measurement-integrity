@@ -6,6 +6,8 @@ comparison. Numerical tolerance is intentionally far below manuscript precision,
 while avoiding false failures from harmless library-version floating-point changes.
 """
 from pathlib import Path
+import json
+import re
 import numpy as np
 import pandas as pd
 
@@ -85,4 +87,78 @@ for name, keys in KEYS.items():
                 raise SystemExit(f"{name}:{col}: categorical/string mismatch")
     print(f"PASS {name}: {len(f)} rows")
 
-print(f"ALL SURFACES PASS within atol={ATOL:g}, rtol={RTOL:g}; analytic bank identity verified")
+# Static tables carry scientific claims and public source references. Check both;
+# Figure 1's source column is a graph coordinate rather than a file citation.
+STATIC_FILES = {
+    "fig1_pipeline_nodes.csv": ([], []),
+    "fig1_pipeline_edges.csv": ([], []),
+    "fig3_empirical_ladder.csv": (["order"], []),
+    "fig4_effect_estimates.csv": (["estimate"], []),
+    "table1_protocol.csv": (["threat"], []),
+}
+STATIC_ATOL = 5e-11
+for name, (identity_columns, provenance_columns) in STATIC_FILES.items():
+    f = pd.read_csv(FROZEN / name)
+    r = pd.read_csv(REPRO / name)
+    if list(f.columns) != list(r.columns) or f.shape != r.shape:
+        raise SystemExit(f"{name}: static table schema/shape mismatch")
+    if identity_columns:
+        if f.duplicated(identity_columns).any() or r.duplicated(identity_columns).any():
+            raise SystemExit(f"{name}: duplicate static scientific identity")
+    # Keep frozen row order: Figure 4's plotted labels depend on that order.
+    for col in f.columns:
+        if col in provenance_columns:
+            continue
+        if pd.api.types.is_numeric_dtype(f[col]) and pd.api.types.is_numeric_dtype(r[col]):
+            if not np.allclose(f[col].to_numpy(dtype=float), r[col].to_numpy(dtype=float),
+                               rtol=0.0, atol=STATIC_ATOL, equal_nan=True):
+                raise SystemExit(f"{name}:{col}: static scientific numeric mismatch")
+        elif not f[col].fillna("").astype(str).equals(r[col].fillna("").astype(str)):
+            raise SystemExit(f"{name}:{col}: static scientific text/order mismatch")
+    print(f"PASS {name}: {len(f)} frozen scientific rows")
+
+    if name in ("fig3_empirical_ladder.csv", "fig4_effect_estimates.csv", "table1_protocol.csv"):
+        for reference in f["source"]:
+            for citation in reference.split("; "):
+                relative, _, anchor = citation.partition("#")
+                path = (ROOT / relative).resolve()
+                if not path.is_relative_to(ROOT.resolve()) or not path.is_file():
+                    raise SystemExit(f"{name}: missing or nonpublic source reference {citation}")
+                if anchor:
+                    headings = re.findall(r"^#{1,6}\s+(.+)$", path.read_text(encoding="utf-8"), re.MULTILINE)
+                    slugs = [re.sub(r"[^a-z0-9 -]", "", h.lower()).replace(" ", "-") for h in headings]
+                    if anchor not in slugs:
+                        raise SystemExit(f"{name}: missing public source anchor {citation}")
+
+print("PASS synchronized, resolvable public source references")
+
+packages = []
+results = []
+for label, directory, result_path in (
+    ("frozen", FROZEN, ROOT / "analysis" / "SENSITIVITY_SURFACE_RESULTS.json"),
+    ("reproduced", REPRO, ROOT / "reproduced" / "SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json"),
+):
+    package = json.loads((directory / "figure_data_package.json").read_text(encoding="utf-8"))
+    result = json.loads(result_path.read_text(encoding="utf-8"))
+    if package["surface_results"] != result:
+        raise SystemExit(f"{label}: figure package does not contain its corresponding surface result")
+    if package["schema"] != "public_sensitivity_surface_figure_data":
+        raise SystemExit(f"{label}: unexpected public figure package schema")
+    if package["generated_by"] != "analysis/sensitivity_surface_framework.py":
+        raise SystemExit(f"{label}: figure package generator path mismatch")
+    if result["analysis"] != "synthetic_sensitivity_surfaces":
+        raise SystemExit(f"{label}: unexpected sensitivity analysis label")
+    for path in package["empirical_files"] + package["figure1_files"]:
+        if not (ROOT / path).is_file():
+            raise SystemExit(f"{label}: figure package references missing public file {path}")
+    packages.append(package)
+    results.append(result)
+
+for key in ("schema", "version", "generated_by", "empirical_files", "figure1_files"):
+    if packages[0][key] != packages[1][key]:
+        raise SystemExit(f"figure package metadata mismatch: {key}")
+for key in ("analysis", "version", "seed", "behavioral_provider_calls", "scientific_spend"):
+    if results[0][key] != results[1][key]:
+        raise SystemExit(f"surface result metadata mismatch: {key}")
+print("PASS synchronized public figure package and analysis metadata")
+print(f"ALL REPRODUCTION CHECKS PASS; surfaces atol={ATOL:g}, rtol={RTOL:g}; static science atol={STATIC_ATOL:g}")
