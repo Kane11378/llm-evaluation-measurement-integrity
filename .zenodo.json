@@ -1,7 +1,7 @@
 {
-  "title": "LLM Evaluation Measurement Integrity: Reproducibility Package",
+  "title": "When Evaluation Changes the Effect: A Measurement-Integrity Framework for Language-Model Experiments — Reproducibility Package",
   "upload_type": "software",
-  "description": "Deterministic code, frozen figure data, empirical derived artifacts, manifests and reproducibility documentation accompanying the manuscript “Evaluation infrastructure can distort behavioral effects in language-model experiments”. The package separates exact analytic results, deterministic synthetic sensitivity surfaces, validation simulations and frozen empirical results from an audited contextual-provenance case study.",
+  "description": "Version 1.1.0 reproducibility package containing deterministic code, frozen figure data, empirical derived artifacts, manifests and documentation accompanying the manuscript “When Evaluation Changes the Effect: A Measurement-Integrity Framework for Language-Model Experiments”. The package separates exact analytic results, deterministic synthetic sensitivity surfaces, validation simulations and frozen empirical results from an audited contextual-provenance case study. Original software source is licensed under MIT (LICENSE); author-owned original derived scientific datasets, research figure content and original documentation are licensed under Creative Commons Attribution 4.0 International (CC BY 4.0; LICENSE-DATA.md; https://creativecommons.org/licenses/by/4.0/legalcode.en). DejaVu figure font components retain their upstream terms in THIRD_PARTY_NOTICES.md. The author grant excludes third-party inputs/assets, provider-owned response content or metadata, raw private transport/account records, unpublished custody/adjudication artifacts, secrets and material with unresolved rights. The top-level mit field describes the software license and does not relicense all components. Historical v1.0.0 remains a separate, unchanged archive with its own version-specific identifier.",
   "creators": [
     {
       "name": "Wang, Kang",
@@ -19,7 +19,7 @@
     "benchmarking"
   ],
   "access_right": "open",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "mit",
   "language": "eng"
 }

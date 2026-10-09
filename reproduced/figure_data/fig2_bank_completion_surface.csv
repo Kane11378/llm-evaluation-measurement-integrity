@@ -1,4 +1,4 @@
-bank_size_B,per_call_hazard_h,expected_failures_Bh,full_bank_probability,stop_probability,omi_B1488_scale_marker
+bank_size_B,per_call_hazard_h,expected_failures_Bh,full_bank_probability,stop_probability,B1488_scale_marker
 100,1e-06,9.999999999999999e-05,0.9999000049498354,9.999505016455856e-05,False
 100,1.2589254117941661e-06,0.0001258925411794166,0.9998741153037181,0.00012588469628194154,False
 100,1.584893192461114e-06,0.00015848931924611142,0.9998415231139478,0.00015847688605219457,False

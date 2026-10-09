@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regenerate the public NMI figure package from frozen the frozen public figure data.
+"""Regenerate the public figure package from frozen public figure data.
 
 No provider/model calls. No empirical refitting. Figure 4 uses only frozen CIs.
 Outputs: SVG, PDF and 300-dpi PNG for Figures 1–4.

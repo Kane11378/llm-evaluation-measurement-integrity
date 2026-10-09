@@ -1,5 +1,5 @@
 {
-  "task": "OMI-3079",
+  "analysis": "synthetic_sensitivity_surfaces",
   "version": "1.0",
   "seed": 3079,
   "behavioral_provider_calls": 0,
@@ -208,7 +208,7 @@
           "seed": 15879
         }
       ],
-      "omi_scale_note": "K=6 is only a design-scale marker; ICC=.40 is synthetic and not estimated from the empirical study."
+      "scale_note": "K=6 is only a design-scale marker; ICC=.40 is synthetic and not estimated from the empirical study."
     },
     "fixed_bank_integrity": {
       "exact_identity": "P(full)=(1-h)^B",
@@ -226,7 +226,7 @@
           "h_for_50pct_full": 0.00046571623862901035
         }
       },
-      "omi_note": "B=1488 is a scale marker only. No empirical per-call hazard is inferred or estimated."
+      "scale_note": "B=1488 is a scale marker only. No empirical per-call hazard is inferred or estimated."
     },
     "derived_ledger_extraction": {
       "all_empty_extreme": {

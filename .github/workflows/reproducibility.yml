@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
+      - name: Verify complete archive source and data identities
+        run: python analysis/verify_archive.py | tee archive_identity_checks.txt
+
       - name: Recompute corrected N=28 confirmation
         run: python analysis/recompute_n28.py | tee n28_recompute.txt
 
@@ -55,7 +58,10 @@ jobs:
               got=hashlib.sha256((Path("figures")/name).read_bytes()).hexdigest()
               if got != meta["sha256"]:
                   raise SystemExit(f"figure hash mismatch for {name}: {got} != {meta['sha256']}")
-              print(name,got)
+              size=(Path("figures")/name).stat().st_size
+              if size != meta["bytes"]:
+                  raise SystemExit(f"figure size mismatch for {name}: {size} != {meta['bytes']}")
+              print(name,got,size)
           PY
 
       - name: Upload reproducibility receipts
@@ -67,5 +73,7 @@ jobs:
             figures/FINAL_FIGURE_SHA256_MANIFEST.json
             n28_recompute.txt
             n124_recompute.txt
+            archive_identity_checks.txt
+            ARCHIVE_MANIFEST.json
             reproduced/SENSITIVITY_SURFACE_RESULTS_REPRODUCED.json
           if-no-files-found: error
