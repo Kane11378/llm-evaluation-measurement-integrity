@@ -4,7 +4,7 @@
 
 Public reproducibility package accompanying the manuscript by **Kang Wang**.
 
-This branch prepares **v1.1.0, an unreleased archival candidate**. The reviewed new archive is intended to become the manuscript's preferred reproducibility version after publication. No release date or new version DOI has been assigned. The historical v1.0.0 archive remains available below.
+Version **1.1.0**. The historical v1.0.0 archive is identified separately below.
 
 This repository contains the public scientific materials needed to audit and reproduce the manuscript's analytic, deterministic-synthetic and frozen empirical results.
 
@@ -13,6 +13,7 @@ This repository contains the public scientific materials needed to audit and rep
 The manuscript does **not** report a confirmed general provenance bias.
 
 The audited contextual-provenance empirical study contains:
+
 - a corrected N=28 confirmatory non-detection;
 - an exploratory depth pattern;
 - a wholly fresh prospective N=124 test that did not confirm the pre-specified positive depth contrast.
@@ -40,7 +41,7 @@ Synthetic parameter values must not be interpreted as empirical estimates of int
 
 ## Reproduction
 
-The released analysis and figure code makes **no model/provider calls**.
+The analysis and figure code makes **no model/provider calls**.
 
 Independent empirical recomputation:
 
@@ -60,9 +61,9 @@ python analysis/sensitivity_surface_framework.py
 python analysis/validate_reproduction.py
 ```
 
-The figure renderer is `analysis/reproduce_figures.py`. Run it in a separate working copy: it writes new exports to `figures/`. The reproducibility workflow retains the original publication files, renders separate outputs, then restores and verifies the original files against their manifest. Successful rendering does not imply that regenerated files have the same byte identity as the archived figures.
+The figure renderer is `analysis/reproduce_figures.py`. Run it in a separate working copy: it writes new exports to `figures/`. The reproducibility workflow retains the frozen figure files, renders separate outputs, then restores and verifies the frozen files against their manifest. Successful rendering does not imply that regenerated files have the same byte identity as the frozen figures.
 
-The archived figures are reproducibility exports from the public figure data. Figure 3 presents the same numerical and scientific evidence as the manuscript's presentation figure, with a different table layout and some wording differences. Archival and journal artwork are distinct assets; regenerating the archive figures does not replace the manuscript figure.
+The repository figures combine code-defined schematics and views of frozen scientific data. Figures 1, 3 and 4 use distinct repository and journal layouts while preserving their scientific content and source boundaries. Their rendered bytes need not be identical. [Figure presentation and source notes](protocol/figure_presentation.md) record the sources and caption correspondence for these assets. Regenerating the repository figures does not replace the manuscript artwork.
 
 The N=28 data and publication figure manifest use exact byte hashes. Preserve the repository's declared line endings when checking out files, including on Windows.
 
@@ -92,12 +93,12 @@ College of Finance and Economics, Taiyuan University of Technology
 Taiyuan 030024, Shanxi, China  
 ORCID: 0009-0006-7727-1214
 
-The associated manuscript contains the authoritative research-process and manuscript-preparation AI declarations. ChatGPT 5.6 Sol (OpenAI) assisted with code, technical documentation, workflow and repository preparation, and manuscript organization, language refinement and editorial review. The author independently verified the scientific decisions and adopted material and takes responsibility for the work.
+The associated manuscript contains the authoritative research-process and manuscript-preparation AI declarations. The author takes responsibility for the scientific decisions, adopted material and accuracy of this reproducibility package.
 
 ## Citation
 
-The prospective citation metadata in [CITATION.cff](CITATION.cff) describe **v1.1.0 (unreleased)**. For work using this candidate, identify the exact Git commit and its unreleased status. After the new archive is published and verified, cite its actual version-specific DOI and the associated manuscript.
+Use [CITATION.cff](CITATION.cff) to cite **version 1.1.0** and cite the associated manuscript. Identify the exact Git commit when using a repository snapshot. For an archived copy, use the version-specific identifier of that copy.
 
-Historical archive: **v1.0.0**, [DOI 10.5281/zenodo.22846957](https://doi.org/10.5281/zenodo.22846957). This DOI identifies only the original archived snapshot. It does not identify the current candidate or a future replacement archive.
+Historical archive: **v1.0.0**, [DOI 10.5281/zenodo.22846957](https://doi.org/10.5281/zenodo.22846957). This DOI identifies only the original v1.0.0 snapshot, separately from version 1.1.0.
 
-[RELEASE_NOTES.md](RELEASE_NOTES.md) describes the prospective version. [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) lists the remaining publication gates. GitHub-Zenodo archiving uses [.zenodo.json](.zenodo.json); its version and component-license description must remain consistent with the citation file when release publication is authorized.
+[RELEASE_NOTES.md](RELEASE_NOTES.md) describes the version's contents and changes. [.zenodo.json](.zenodo.json) provides the software archive metadata and component-license description.

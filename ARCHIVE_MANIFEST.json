@@ -1,10 +1,9 @@
 {
   "schema": "reproducibility_archive_manifest_v1",
   "version": "1.1.0",
-  "publication_status": "unreleased",
   "hash_algorithm": "SHA-256",
-  "scope": "Complete source, derived data, figures, licenses and documentation proposed for the reproducibility archive.",
-  "note": "The manifest is excluded from its own file digests. Verify these exact bytes before regeneration. Recomputed outputs are checked by scientific tolerance tests; they need not be byte-identical across platforms. No new version-specific DOI or release date has been assigned.",
+  "scope": "Complete source, derived data, figures, licenses and documentation for the version 1.1.0 reproducibility package.",
+  "note": "The manifest is excluded from its own file digests. Verify these exact bytes before regeneration. Recomputed outputs are checked by scientific tolerance tests; they need not be byte-identical across platforms.",
   "files": {
     ".gitattributes": {
       "sha256": "873cfd2a8b405c8ddd6a43f744903ca1190aff05cbfbcc52297d94bc57e9064c",
@@ -23,8 +22,8 @@
       "bytes": 50
     },
     ".zenodo.json": {
-      "sha256": "b590071918b8a5b34d3b340420221d1446598bcebe0bd2b6b9e427c33dd1e1df",
-      "bytes": 2217
+      "sha256": "aaa4a17064d034b0572b5f06614bbbe0510da7c4b40a171920e50eac08f715dd",
+      "bytes": 1989
     },
     "analysis/recompute_n124.py": {
       "sha256": "281ea888d588cfb4d2f488fafacb083934334c77ffa948577d2078fd73e21dac",
@@ -55,12 +54,12 @@
       "bytes": 1966
     },
     "CHANGELOG.md": {
-      "sha256": "6f159080d8811b17220aa5cc622d515618324c46cdd4ac39c0ab35b6c1cb02e4",
-      "bytes": 3298
+      "sha256": "ba70b04f7041a56a17740901efd5258403834c0b8501296f52d055b64fef7a55",
+      "bytes": 2735
     },
     "CITATION.cff": {
-      "sha256": "fc0267bf544f635aa65cac1ebffc6eb3d0ad3ba30124e07f02716e83c0870186",
-      "bytes": 1398
+      "sha256": "791e56a6b37157f2d01d8d7c9a488e18e79a50cb77a91337043eeaf6026b6ed2",
+      "bytes": 1291
     },
     "empirical/corrected_n28_instance_effects.csv": {
       "sha256": "6ae50c436515e620a5a8cdacaad9560ddad6d89811ea4e430fc63e502c1baabb",
@@ -222,6 +221,10 @@
       "sha256": "1ed522f8535eebb71d96d970f21dd1981d0be85e009349b62b3b93aa69d38507",
       "bytes": 14341
     },
+    "protocol/figure_presentation.md": {
+      "sha256": "2bc9db123fefa6482e61b31cd4b392aff8226136ed6b8fc9ff43256004242438",
+      "bytes": 4539
+    },
     "protocol/identification_framework.md": {
       "sha256": "97591d4e8200a43d6b6ac62bcce176a2d51ad66156292bc9b9176fc36ba6a097",
       "bytes": 2423
@@ -231,16 +234,12 @@
       "bytes": 1804
     },
     "README.md": {
-      "sha256": "2566edc6b45b5d9180e08179c0ee15dc0a43bf51dc0692bb5838048ac43a4bed",
-      "bytes": 7682
-    },
-    "RELEASE_CHECKLIST.md": {
-      "sha256": "2c54dcf0cadf69c2703d2836452c25cad4804eda0281a4ff65e8d30e34ab7434",
-      "bytes": 4567
+      "sha256": "4a987e88f6e57b57a24047d3f170ef842e9dee617080d3d69e31a8e4962b2f2e",
+      "bytes": 7111
     },
     "RELEASE_NOTES.md": {
-      "sha256": "0d3b9088ed4b76bd4e7ae640d7e7e918795ac0175716029cd9abd617feeb33ed",
-      "bytes": 3773
+      "sha256": "6099edbb12ac6e06ba789d65511b1f181d1c84406ceb5d2e8bc64ff992a56492",
+      "bytes": 3235
     },
     "reproduced/figure_data/fig1_pipeline_edges.csv": {
       "sha256": "a606996c864af8ccb08096d2d35eb80f94230365984b53350226ba21a459a986",

@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "This is the unreleased v1.1.0 candidate. If you use it, cite the exact Git commit and identify it as unreleased. After publication, cite the verified version-specific archive DOI and associated manuscript."
+message: "If you use this reproducibility package, cite this software version and the associated manuscript. Identify the exact Git commit when using a repository snapshot."
 title: "When Evaluation Changes the Effect: A Measurement-Integrity Framework for Language-Model Experiments — Reproducibility Package"
 type: software
 authors:
@@ -10,15 +10,14 @@ version: "1.1.0"
 repository-code: "https://github.com/Kane11378/llm-evaluation-measurement-integrity"
 license: "MIT"
 abstract: >-
-  Unreleased v1.1.0 archival candidate accompanying the manuscript
+  Version 1.1.0 reproducibility package accompanying the manuscript
   "When Evaluation Changes the Effect: A Measurement-Integrity Framework
   for Language-Model Experiments". Deterministic reproducibility software
   with original code under MIT.
   Author-owned original derived scientific datasets, research figure content
   and documentation are separately licensed
   under CC BY 4.0 as scoped in LICENSE-DATA.md; third-party font components
-  retain the terms in THIRD_PARTY_NOTICES.md. No release date or new
-  version-specific DOI has been assigned. The historical v1.0.0 archive
+  retain the terms in THIRD_PARTY_NOTICES.md. The historical v1.0.0 archive
   remains a separate, unchanged snapshot.
 keywords:
   - large language models
